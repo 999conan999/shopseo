@@ -1,49 +1,106 @@
 <?php 
-    // Remove Parent Category from Child Category URL
-    add_filter('term_link', 'devvn_no_category_parents', 1000, 3);
-    function devvn_no_category_parents($url, $term, $taxonomy) {
-    if($taxonomy == 'category'){
-        $term_nicename = $term->slug;
-        $url = trailingslashit(get_option( 'home' )) . user_trailingslashit( $term_nicename, 'category' );
-    }
-    return $url;
-    }
-    // Rewrite url new
-    function devvn_no_category_parents_rewrite_rules($flash = false) {
-    $terms = get_terms( array(
-        'taxonomy' => 'category',
-        'post_type' => 'post',
-        'hide_empty' => false,
-    ));
-    if($terms && !is_wp_error($terms)){
-        foreach ($terms as $term){
-            $term_slug = $term->slug;
-            add_rewrite_rule($term_slug.'/?$', 'index.php?category_name='.$term_slug,'top');
-            add_rewrite_rule($term_slug.'/page/([0-9]{1,})/?$', 'index.php?category_name='.$term_slug.'&paged=$matches[1]','top');
-            add_rewrite_rule($term_slug.'/(?:feed/)?(feed|rdf|rss|rss2|atom)/?$', 'index.php?category_name='.$term_slug.'&feed=$matches[1]','top');
-        }
-    }
-    if ($flash == true)
-        flush_rewrite_rules(false);
-    }
-    add_action('init', 'devvn_no_category_parents_rewrite_rules');
+    // // Remove Parent Category from Child Category URL
+    // add_filter('term_link', 'devvn_no_category_parents', 1000, 3);
+    // function devvn_no_category_parents($url, $term, $taxonomy) {
+    // if($taxonomy == 'category'){
+    //     $term_nicename = $term->slug;
+    //     $url = trailingslashit(get_option( 'home' )) . user_trailingslashit( $term_nicename, 'category' );
+    // }
+    // return $url;
+    // }
+    // // Rewrite url new
+    // function devvn_no_category_parents_rewrite_rules($flash = false) {
+    // $terms = get_terms( array(
+    //     'taxonomy' => 'category',
+    //     'post_type' => 'post',
+    //     'hide_empty' => false,
+    // ));
+    // if($terms && !is_wp_error($terms)){
+    //     foreach ($terms as $term){
+    //         $term_slug = $term->slug;
+    //         add_rewrite_rule($term_slug.'/?$', 'index.php?category_name='.$term_slug,'top');
+    //         add_rewrite_rule($term_slug.'/page/([0-9]{1,})/?$', 'index.php?category_name='.$term_slug.'&paged=$matches[1]','top');
+    //         add_rewrite_rule($term_slug.'/(?:feed/)?(feed|rdf|rss|rss2|atom)/?$', 'index.php?category_name='.$term_slug.'&feed=$matches[1]','top');
+    //     }
+    // }
+    // if ($flash == true)
+    //     flush_rewrite_rules(false);
+    // }
+    // add_action('init', 'devvn_no_category_parents_rewrite_rules');
 
-    /*fix error category 404*/
-    function devvn_new_category_edit_success() {
-    devvn_no_category_parents_rewrite_rules(true);
-    }
-    add_action('created_category','devvn_new_category_edit_success');
-    add_action('edited_category','devvn_new_category_edit_success');
-    add_action('delete_category','devvn_new_category_edit_success');
+    // /*fix error category 404*/
+    // function devvn_new_category_edit_success() {
+    // devvn_no_category_parents_rewrite_rules(true);
+    // }
+    // add_action('created_category','devvn_new_category_edit_success');
+    // add_action('edited_category','devvn_new_category_edit_success');
+    // add_action('delete_category','devvn_new_category_edit_success');
 
-// if (!function_exists('send')) {
-//     function send($data){
-//         header('Cache-Control: no-cache, must-revalidate');
-//         header('Content-type: application/json');
-//         echo json_encode($data);
+if (!function_exists('send')) {
+    function send($data){
+        header('Cache-Control: no-cache, must-revalidate');
+        header('Content-type: application/json');
+        echo json_encode($data);
+    }
+}
+// if (!function_exists('create_shopseo_img_table')) {
+//     function create_shopseo_img_table(){
+//         global $wpdb;
+//         $name_table=$wpdb->prefix .'shopseo_imgs';
+//         $charsetCollate = $wpdb->get_charset_collate();
+//         $createTable = "CREATE TABLE IF NOT EXISTS `{$name_table}` (
+//             `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+//             `url` varchar(200) NULL,
+//             `url300` varchar(200) NULL,
+//             `tag` varchar(50) NULL,
+//             `title` varchar(100) NULL,
+//             `date_create` timestamp NOT NULL,
+//             PRIMARY KEY (`id`)
+//         ) {$charsetCollate};";
+//         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+//         dbDelta( $createTable );
+//     }
+// }
+// if(is_user_logged_in()){
+//     add_action("after_switch_theme", "wp_register_theme_shopseo");
+//     function wp_register_theme_shopseo($code, $function) {
+//         create_shopseo_img_table();
 //     }
 // }
 // //
+if(is_user_logged_in()){
+    add_action('after_switch_theme', 'my_theme_activation_hook');
+}
+
+function my_theme_activation_hook() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'shopseo_imgs';
+    
+    // Kiểm tra xem bảng đã tồn tại hay chưa
+    if ($wpdb->get_var("SHOW TABLES LIKE '{$table_name}'") != $table_name) {
+        $charset_collate = $wpdb->get_charset_collate();
+        
+        // Tạo câu truy vấn để tạo bảng
+        $sql = "CREATE TABLE {$table_name} (
+            id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            url varchar(200) NULL,
+            url300 varchar(200) NULL,
+            tag varchar(50) NULL,
+            title varchar(100) NULL,
+            date_create timestamp NOT NULL,
+            PRIMARY KEY (id)
+        ) {$charset_collate};";
+        
+        // Include file upgrade.php
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        
+        // Thực hiện tạo bảng
+        dbDelta($sql);
+    }
+}
+
+
+
 
 // // HOME
 // function get_posts_star_by_category_id_Home($id){

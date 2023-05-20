@@ -1,11 +1,4 @@
 <?php
-
-
-
-
-
-
-
 /**
  * Add a page to the dashboard menu.
  */
@@ -44,14 +37,14 @@ define('CORE', THEME_URL."/templates/fs.php");
      */
 require_once(CORE);
 
-if(!function_exists('danhdev_setup')){
-    function danhdev_setup() {
-            add_theme_support( 'post-thumbnails' );
-            // Theme menu
-            register_nav_menu('danhdev-menu', 'Danhdev Menu');
-    }
-    add_action('init', 'danhdev_setup');
-}
+// if(!function_exists('danhdev_setup')){
+//     function danhdev_setup() {
+//             add_theme_support( 'post-thumbnails' );
+//             // Theme menu
+//             register_nav_menu('danhdev-menu', 'Danhdev Menu');
+//     }
+//     add_action('init', 'danhdev_setup');
+// }
 
 
 

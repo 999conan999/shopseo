@@ -125,7 +125,7 @@
                 foreach ($post_infor->related_links as $x){
             ?>
                 <div class="col-6 col-md-3">
-                    <a class="refz" href="<?php echo $x->url; ?>" title="<?php echo $x->name; ?>">
+                    <a class="refz" target="_blank" href="<?php echo $x->url; ?>" title="<?php echo $x->name; ?>">
                         <img src="<?php echo $x->thumnail; ?>" width="64px" height="64px">
                         <p><?php echo $x->name; ?></p>
                     </a>

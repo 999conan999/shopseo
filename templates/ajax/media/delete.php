@@ -14,7 +14,7 @@
     function delete_file_clone_folder($id){
         global $wpdb;
         $table_prefix=$wpdb->prefix .'shopseo_imgs';
-             $sql = $wpdb->prepare( "SELECT id,url300,url FROM $table_prefix WHERE id=%d ",$id);
+             $sql = $wpdb->prepare( "SELECT id,url300,url150,url FROM $table_prefix WHERE id=%d ",$id);
         $results = $wpdb->get_results( $sql , OBJECT );
         if(count($results)==1){
             $uploads = wp_get_upload_dir();
@@ -22,6 +22,9 @@
             $file = str_replace("wp-content/uploads",$uploads['basedir'],$url);
             wp_delete_file($file);
             $url=$results[0]->url300;
+            $file = str_replace("wp-content/uploads",$uploads['basedir'],$url);
+            wp_delete_file($file);
+            $url=$results[0]->url150;
             $file = str_replace("wp-content/uploads",$uploads['basedir'],$url);
             wp_delete_file($file);
             return true;

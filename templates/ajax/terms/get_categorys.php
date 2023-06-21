@@ -1,0 +1,53 @@
+<?php 
+
+$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
+require_once( $parse_uri[0] . 'wp-load.php' );	// global $wpdb;
+
+//
+function get_all_categorys(){
+     global $wpdb;
+     //
+     $table_prefix=$wpdb->prefix .'shopseo_terms';
+     $sql = $wpdb->prepare( "SELECT id_term,thumnail FROM $table_prefix ORDER BY id_term DESC");
+     $results = $wpdb->get_results( $sql , ARRAY_A );
+     $ar_1=array();
+     foreach($results as $x){
+          $obj= new stdClass();
+          $ar_1[$x["id_term"]]=$x["thumnail"];
+     }
+     $defaultCategoryId = get_option('default_category');
+     //
+     $table_prefix=$wpdb->prefix .'term_taxonomy';
+     $sql = $wpdb->prepare( "SELECT term_id FROM $table_prefix WHERE taxonomy ='category' ORDER BY term_id DESC");
+     $results = $wpdb->get_results( $sql , OBJECT );
+     $rs=array();
+     foreach($results as $x){
+          $id=$x->term_id;
+          $cat = get_category( $id );
+          $id=$x->term_id;
+          $obj= new stdClass();
+          $obj->id=$id;
+          $obj->url=get_category_link($id);
+          $obj->title=$cat->name;
+          if (isset($ar_1[$id])) {
+               $obj->thumnail=json_decode($ar_1[$id]);
+          } else{
+               $o= new stdClass();
+               $o->url="";
+               $o->url150="";
+               $o->url300="";
+               $obj->thumnail=$o;
+          }
+          if($defaultCategoryId==$id){
+               $obj->defaultCategory=true;
+          }else{
+               $obj->defaultCategory=false;
+          }
+          array_push($rs,$obj);
+     }
+          send($rs);
+     }
+ // if(is_user_logged_in()){
+     get_all_categorys();
+ // }
+ ?>

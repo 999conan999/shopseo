@@ -13,6 +13,7 @@
           $object->id=$x->id;
           $object->url=$home.'/'.$x->url;
           $object->url300=$home.'/'.$x->url300;
+          $object->url150=$home.'/'.$x->url150;
           $object->tag=$x->tag;
           array_push($rs,$object);
         }

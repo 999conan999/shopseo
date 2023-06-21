@@ -16,7 +16,7 @@
         if(count($file_arr)>0){
             foreach($file_arr as $file){
                 $uploadedfile = $file;
-            
+                $file_type = $uploadedfile['type'];
                 $upload_overrides = array(
                     'test_form' => false
                 );
@@ -28,33 +28,62 @@
                     $image_info = getimagesize($file_path);
                     $original_width = $image_info[0];
                     $original_height = $image_info[1];
-                    $resized_url ='';
+                    $resized_url300 ='';
+                    $resized_url150 ='';
                     $url_og='';
                     $url= $movefile['url'];
                     preg_match_all('/wp-content(.+?)*/',$url, $url_og);
                     $url_og=$url_og[0][0];
-                    // Kiểm tra kích thước hình ảnh và scale thành 300x300 nếu cần thiết
-                    if ($original_width > 300 || $original_height > 300) {
-                        $editor = wp_get_image_editor($file_path);
-                        if (!is_wp_error($editor)) {
-                            $editor->resize(300, 300, true);
-                            $resized_file = $editor->save();
-                            
-                            // Lấy đường dẫn tới hình ảnh đã scale
-                            $path=$resized_file['path'];
-                            preg_match_all('/wp-content(.+?)*/',$path, $resized_url);
-                            $resized_url = $resized_url[0][0];
-                            
-                            
-                            // Thực hiện các xử lý khác với hình ảnh đã scale
+                    if ($file_type !== 'image/gif') {
+                        // Kiểm tra kích thước hình ảnh và scale thành 300x300 nếu cần thiết
+                        if ($original_width > 300 || $original_height > 300) {
+                            $editor = wp_get_image_editor($file_path);
+                            if (!is_wp_error($editor)) {
+                                $editor->resize(300, 300, true);
+                                $resized_file = $editor->save();
+                                
+                                // Lấy đường dẫn tới hình ảnh đã scale
+                                $path=$resized_file['path'];
+                                preg_match_all('/wp-content(.+?)*/',$path, $resized_url300);
+                                $resized_url300 = $resized_url300[0][0];
+                                
+                                
+                                // Thực hiện các xử lý khác với hình ảnh đã scale
+                            }else{
+                                $resized_url300=$url_og;
+                            }
+                        }else{
+                            $resized_url300=$url_og;
                         }
-                    } 
-                    // var_dump($url_og);
-                    // var_dump($resized_url);
+                        // Kiểm tra kích thước hình ảnh và scale thành 150x150 nếu cần thiết
+                        if ($original_width > 150 || $original_height > 150) {
+                            $editor = wp_get_image_editor($file_path);
+                            if (!is_wp_error($editor)) {
+                                $editor->resize(150, 150, true);
+                                $resized_file = $editor->save();
+                                
+                                // Lấy đường dẫn tới hình ảnh đã scale
+                                $path=$resized_file['path'];
+                                preg_match_all('/wp-content(.+?)*/',$path, $resized_url150);
+                                $resized_url150 = $resized_url150[0][0];
+                                
+                                
+                                // Thực hiện các xử lý khác với hình ảnh đã scale
+                            }else{
+                                $resized_url150=$url_og;
+                            }
+                        }else{
+                            $resized_url150=$url_og;
+                        }
+                    }else{
+                        $resized_url300 =$url_og;
+                        $resized_url150 =$url_og;
+                    }
                     $tag=$tag==""?"tag":$tag;
                     $data = array(
                         'url'=> $url_og,
-                        'url300'=> $resized_url,
+                        'url300'=> $resized_url300,
+                        'url150'=> $resized_url150,
                         'tag'=> $tag,
                         'title'=> '',
                         'date_create' => current_time('mysql'),
@@ -71,7 +100,8 @@
                         $lastid = $wpdb->insert_id;
                         $object->id=$lastid;
                         $object->url=$home.'/'.$url_og;
-                        $object->url300=$home.'/'.$resized_url;
+                        $object->url300=$home.'/'.$resized_url300;
+                        $object->url150=$home.'/'.$resized_url150;
                         $object->tag=$tag;
                         $object->title='';
                         array_push($rs,$object);

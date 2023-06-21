@@ -194,10 +194,8 @@ p.danh-price {
     padding-right: 12px;
 }
 .cam-dt {
-    border: 1px solid #dee2e6;
-    /* margin-left: -12px;
-    margin-right: -12px; */
-    background-color: white;
+    border: 1px solid #3d61a1;
+    background-color: #ffffff;
     border-radius: 4px;
     height: 100%;
 }
@@ -209,7 +207,8 @@ p.danh-price {
 .cam-tt-dt {
     font-size: 22px;
     font-weight: 700;
-    color: #ff9800;
+    color: #ffffff;
+    background-color: #3d61a1;
 }
 .content-cam-dt>p{
     margin-bottom: 7px;
@@ -246,7 +245,7 @@ p.danh-price {
     font-weight: 800;
 }
 .card-dr{
-    margin-bottom: 3px;
+    margin-bottom: 10px;
 }
 .promo-detail>p::before{
     content: "✔️";
@@ -608,6 +607,7 @@ p.danh-price {
 }
 span.xuhms.xu-huong {
     font-size: 26px;
+    color: #bbbbbb;
 }
 .promo-detail img {
     width: 30px !important;

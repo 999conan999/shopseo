@@ -154,21 +154,35 @@ function add_to_cart(){
 }
 try{
     let is_render_img=false;
+    let is_render_input_com=false;
     var A_offset = $('#thong-so-ki-thuat').offset().top-100;
     $(window).scroll(function() {
-        if(!is_render_img){
-            render_imgs();
-            show_camKet_khuyenMai();
-            is_render_img=true;
+        var scroll_pos = $(window).scrollTop();
+        if(scroll_pos>100){
+            if(!is_render_img){
+                render_imgs();
+                show_camKet_khuyenMai();
+                is_render_img=true;
+            }
+            if(!is_render_input_com){
+                render_html_com();
+                is_render_input_com=true;
+            }
         }
         //
-        var scroll_pos = $(window).scrollTop();
         if (scroll_pos >= A_offset) {
             document.getElementById("scrollTop").style.display = "block";
         }else{
             document.getElementById("scrollTop").style.display = "none";
         }
     });
+    //
+    var user_comments=JSON.parse(localStorage.getItem("user_comments"))==null?[]:JSON.parse(localStorage.getItem("user_comments"));
+    user_comments.forEach(e => {
+        let your_comment='<div class="com1"> <div class="w1"> <b>'+e.rs_user_name+'</b><span style="padding-left: 12px;"> <svg width="24px" hight="24px" style="fill:#446cb3;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M274.7 304H173.3C77.61 304 0 381.6 0 477.3C0 496.5 15.52 512 34.66 512H413.3C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304zM224 256c70.7 0 128-57.31 128-128S294.7 0 224 0C153.3 0 96 57.31 96 128S153.3 256 224 256zM632.3 134.4c-9.703-9-24.91-8.453-33.92 1.266l-87.05 93.75l-38.39-38.39c-9.375-9.375-24.56-9.375-33.94 0s-9.375 24.56 0 33.94l56 56C499.5 285.5 505.6 288 512 288h.4375c6.531-.125 12.72-2.891 17.16-7.672l104-112C642.6 158.6 642 143.4 632.3 134.4z"/></svg></span><i style="color:#446cb3;">Người ghé thăm</i> <p>'+e.rs_comment+'</p> </div> </div>';
+        var commentsDiv = document.getElementById("comments");
+        commentsDiv.innerHTML = your_comment + commentsDiv.innerHTML;
+    })
 }catch(e){}
 // hien thi hinh anh
 
@@ -208,7 +222,6 @@ try{
 }catch(e){}
 }
 //
-
 function show_camKet_khuyenMai(){
 try{
     let currentDate = new Date();
@@ -240,3 +253,159 @@ try{
     targetElement.innerHTML=rs;
 }catch(e){}
 }
+// writecom here
+function render_html_com(){
+try{
+let input_html_com=`
+<div class="write-cm">
+    <div id="write_comment_input" class="row" style="padding: 5px;">
+        <div class="col-12">
+            <textarea id="rs_comment" cols="45" rows="3" class="text-cm"
+                minlength="10" required=""
+                placeholder="Mời bạn chia sẻ thêm một số cảm nhận..."
+                aria-required="true"></textarea>
+        </div>
+        <div class="col-6">
+            <input id="rs_user_name" class="dot" type="text" value="" size="30"
+                autocomplete="on" required="" placeholder="Họ tên (bắt buộc)"
+                aria-required="true">
+        </div>
+        <div class="col-6 op">
+            <input id="rs_phone" class="dot" type="number" value="" size="30"
+                autocomplete="on" required="" placeholder="Số điện thoại (bắt buộc)"
+                aria-required="true">
+        </div>
+        <div class="col-12 re">
+            <button class="sendbl" onclick="submit_com()">Gửi bình luận</button>
+            <div class="canlex">
+                <span onclick="hiden_input_com()">Hủy</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+<b class="vietBinhLuan" data="quB0ntJS" id="vbl_quB0ntJS" style="display: none;">Viết bình luận:</b>`;
+    document.getElementById("writecom").innerHTML = input_html_com;
+}catch(e){}
+}
+function show_input_com(){
+    document.getElementById("writecom").style.height = "200px";
+}
+function hiden_input_com(){
+    document.getElementById("writecom").style.height = "0px";
+}
+var lock_submit=false;
+function submit_com() {
+    let id = document.getElementById("writecom").getAttribute("value");
+    let home_url = document.getElementById("writecom").getAttribute("data");
+    let rs_comment = document.getElementById("rs_comment").value;
+    let rs_user_name = document.getElementById("rs_user_name").value;
+    let rs_phone = document.getElementById("rs_phone").value;
+    let vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+    let url=home_url+'/wp-content/themes/shopseo/templates/ajax/comments/add_comment.php';
+    if (rs_comment.length < 8) {
+      alert("Nội dung bình luận quá ngắn!");
+    } else if (rs_user_name.length < 2) {
+      alert("Tên bạn không đúng!");
+    } else if (vnf_regex.test(rs_phone) == false) {
+      alert("Số điện thoại không đúng!");
+    } else {
+        if(!lock_submit){
+            lock_submit=true;
+            let data_send=new FormData();
+            data_send.append('id',id);
+            data_send.append('rs_comment',rs_comment);
+            data_send.append('rs_user_name',rs_user_name);
+            data_send.append('rs_phone',rs_phone);
+            fetch(url, {
+            method: "POST",
+            body:data_send
+            })
+            .then(response => response.json())
+            .then(a => {
+                lock_submit=false;
+                if(a.status){
+                    // luu vao local
+                    let your_comment='<div class="com1"> <div class="w1"> <b>'+rs_user_name+'</b><span style="padding-left: 12px;"> <svg width="24px" hight="24px" style="fill:#446cb3;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M274.7 304H173.3C77.61 304 0 381.6 0 477.3C0 496.5 15.52 512 34.66 512H413.3C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304zM224 256c70.7 0 128-57.31 128-128S294.7 0 224 0C153.3 0 96 57.31 96 128S153.3 256 224 256zM632.3 134.4c-9.703-9-24.91-8.453-33.92 1.266l-87.05 93.75l-38.39-38.39c-9.375-9.375-24.56-9.375-33.94 0s-9.375 24.56 0 33.94l56 56C499.5 285.5 505.6 288 512 288h.4375c6.531-.125 12.72-2.891 17.16-7.672l104-112C642.6 158.6 642 143.4 632.3 134.4z"/></svg></span><i style="color:#446cb3;">Người ghé thăm</i> <p>'+rs_comment+'</p> </div> </div>';
+                    user_comments.push({
+                        id:id,
+                        rs_comment:rs_comment,
+                        rs_user_name:rs_user_name,
+                        rs_phone:rs_phone
+                    })
+                    localStorage.setItem("user_comments", JSON.stringify(user_comments));
+                    var commentsDiv = document.getElementById("comments");
+                    commentsDiv.innerHTML = your_comment + commentsDiv.innerHTML;
+                    hiden_input_com();
+                    document.getElementById("rs_comment").value = "";
+                    document.getElementById("rs_user_name").value = "";
+                    document.getElementById("rs_phone").value = "";
+                }else{
+                    alert("Lỗi, không gửi được bình luận.")
+                }
+            })
+            .catch(error => {
+                lock_submit=false;
+                // Handle any errors
+                console.error(error);
+            });
+        }
+    }
+}
+// xu ly xem them
+var page_com=0;
+function set_more_bl(){
+    let data= {
+        is_show_more:false,
+        html_bl:`<div class="w1"> <b>Văn Nam</b>
+        <span class="icon-cartx comx"></span>
+        <i>Đã mua tại anbinhnew.com</i>
+        <p>Sản phẩm chắc chắn, đẹp, giao hàng nhanh, giá tốt, hài lòng nè</p>
+        <div class="w-img-com row">
+            <div class="dev-3 pdr-3">
+                <img class="img-com" src="https://anbinhnew.com/wp-content/uploads/2023/04/giuong-mi-thuat-5.jpg" width="100%">
+            </div>
+            <div class="dev-3 pdr-3">
+                <img class="img-com" src="https://anbinhnew.com/wp-content/uploads/2023/04/giuong-mi-thuat-5.jpg" width="100%">
+            </div>
+            <div class="dev-3 pdr-3">
+                <img class="img-com" src="https://anbinhnew.com/wp-content/uploads/2023/04/giuong-mi-thuat-5.jpg" width="100%">
+            </div>
+        </div>
+        <span class="rep">Trả lời</span>
+        <div class="w1 w2"> <b>Shop</b>
+            <p>Cảm ơn đã sử dụng dịch vụ của chúng tôi!</p>
+        </div>
+    </div><div class="w1"> <b>Văn Nam</b>
+    <span class="icon-cartx comx"></span>
+    <i>Đã mua tại anbinhnew.com</i>
+    <p>Sản phẩm chắc chắn, đẹp, giao hàng nhanh, giá tốt, hài lòng nè</p>
+    <div class="w-img-com row">
+        <div class="dev-3 pdr-3">
+            <img class="img-com" src="https://anbinhnew.com/wp-content/uploads/2023/04/giuong-mi-thuat-5.jpg" width="100%">
+        </div>
+        <div class="dev-3 pdr-3">
+            <img class="img-com" src="https://anbinhnew.com/wp-content/uploads/2023/04/giuong-mi-thuat-5.jpg" width="100%">
+        </div>
+        <div class="dev-3 pdr-3">
+            <img class="img-com" src="https://anbinhnew.com/wp-content/uploads/2023/04/giuong-mi-thuat-5.jpg" width="100%">
+        </div>
+    </div>
+    <span class="rep">Trả lời</span>
+    <div class="w1 w2"> <b>Shop</b>
+        <p>Cảm ơn đã sử dụng dịch vụ của chúng tôi!</p>
+    </div>
+        </div>`
+    };
+    if(data.is_show_more!=undefined){
+        var commentsDiv = document.getElementById("comments");
+        commentsDiv.innerHTML = commentsDiv.innerHTML+data.html_bl;
+        page_com++;
+        if(!data.is_show_more){
+            document.getElementById("morex").style.display = "none";
+        }
+    }else{
+        document.getElementById("morex").style.display = "none";
+    }
+}
+  

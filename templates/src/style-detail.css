@@ -301,6 +301,7 @@ p.danh-price {
     font-family: "Roboto", sans-serif;
     padding-left: 12px;
     padding: 5px;
+    padding-bottom: 95px;
 }
 .w1 {
     margin-top: 10px;
@@ -360,6 +361,7 @@ p.danh-price {
 .wpc{
     background-color: #ffffff;
     padding-top: 1px;
+    transition: all 0.3s linear 0s;
 }
 .write-cm{
     margin-top: 5px;
@@ -613,4 +615,7 @@ span.xuhms.xu-huong {
     width: 30px !important;
     height: auto !important;
     border-radius: 50%;
+}
+.comx:before{
+    color: #52b858 !important;
 }

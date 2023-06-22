@@ -147,6 +147,33 @@ function my_theme_activation_hook() {
         // Thực hiện tạo bảng
         dbDelta($sql);
     }
+
+
+    //
+    $table_name = $wpdb->prefix . 'shopseo_comments';
+    $table_parent = $wpdb->prefix . 'posts';
+    // Kiểm tra xem bảng đã tồn tại hay chưa
+    if ($wpdb->get_var("SHOW TABLES LIKE '{$table_name}'") != $table_name) {
+        $charset_collate = $wpdb->get_charset_collate();
+        
+        // Tạo câu truy vấn để tạo bảng
+        $sql = "CREATE TABLE {$table_name} (
+            id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            id_post bigint(20) UNSIGNED NOT NULL,
+            rs_comment text NOT NULL,
+            rs_user_name text NOT NULL,
+            rs_phone varchar(20) NOT NULL,
+            rs_status varchar(10) NOT NULL,
+            rs_rep text NOT NULL,
+            json_img longtext NOT NULL,
+            PRIMARY KEY (id),
+            FOREIGN KEY (id_post) REFERENCES {$table_parent}(ID) ON DELETE CASCADE
+        ) {$charset_collate};";
+        // Thực hiện tạo bảng
+        dbDelta($sql);
+    }
+
+
 }
 
 

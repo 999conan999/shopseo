@@ -54,7 +54,7 @@ function get_post_infor($id){
 function get_comments_shopseo($id_post,$page){//  
     global $wpdb;
     $table_prefix=$wpdb->prefix .'shopseo_comments';
-    $quantity=3;
+    $quantity=8;
     $offset=abs((int)stripslashes(strip_tags($page))*$quantity);
     $sql = $wpdb->prepare( "SELECT rs_comment,rs_user_name,rs_rep,json_img FROM $table_prefix WHERE id_post = %d AND  rs_status ='publish' ORDER BY id DESC  LIMIT %d OFFSET %d ",$id_post,$quantity,$offset);
     $results = $wpdb->get_results( $sql , OBJECT );
@@ -87,5 +87,40 @@ function get_comments_shopseo($id_post,$page){//
   $obj->html=$html;
   $obj->status=count($results)==$quantity?true:false;
   return($obj);
+}
+// get time and data cache
+function get_cache_by_table_name($table_name,$id_post){
+    global $wpdb;
+    $table_prefix=$wpdb->prefix .$table_name;
+         $sql = $wpdb->prepare( "SELECT time_cache,data_cache FROM $table_prefix WHERE id_post= %d ORDER BY id DESC ",$id_post);
+    $results = $wpdb->get_results( $sql , OBJECT );
+    $o = new stdClass();
+    if(count($results)>0){
+        if($results[0]->time_cache==""||$results[0]->time_cache==NULL||$results[0]->data_cache==""||$results[0]->data_cache==NULL){
+            $o->time_cache=0;
+            $o->data_cache='';
+        }else{
+            $o->time_cache=(int)($results[0]->time_cache);
+            $o->data_cache=($results[0]->data_cache);
+        }
+    }else{
+        $o->time_cache=0;
+        $o->data_cache='';
+    }
+    return $o;
+}
+// set cache
+function set_cache($table_name,$id,$time_now,$html_content){
+    $data = array(
+        'time_cache'=> $time_now,
+        'data_cache'=> $html_content,
+    );
+    global $wpdb;
+    $table = $wpdb->prefix . $table_name;
+    $rs=$wpdb->update(
+        $table,
+        $data,
+        array('id_post' => $id)
+    );
 }
 ?>

@@ -1,25 +1,25 @@
 <?php
+
     require_once(get_stylesheet_directory().'/templates/fs_common_theme.php');
     $obj=get_queried_object();
     $id=$obj->ID;
+    // xu ly cache
+    $common= get_common();
+    $time_now=time();
+    $o=get_cache_by_table_name('shopseo_posts',$id);
+    if($o->time_cache>0){
+        $limit_time=(int)$common->time_cache;
+        $denta=$time_now-$o->time_cache;
+        if($denta<$limit_time){
+            echo $o->data_cache;
+            die();
+        }
+    }
     require_once(get_stylesheet_directory().'/templates/single/control.php');
     require_once(get_stylesheet_directory().'/templates/header/header.php'); 
     require_once(get_stylesheet_directory().'/templates/footer/footer.php');
-    // echo get_permalink($id);
-    // $time_cache=get_post_meta($id,'time_cache', true);//
-    // $data_setup_cache_meme_theme=get_setup_cache_meme_theme();
-    // $is_action_cache=true;
-    // if($time_cache!=""&&$data_setup_cache_meme_theme->is_turn_cache){
-    //     // co data cache
-    //     $denta_time=time()-(int)$time_cache;
-        
-    //     if($denta_time<(int)$data_setup_cache_meme_theme->time_cache){
-    //         $time_cache=get_post_meta($id,'data_cache', true);//
-    //         $is_action_cache=false;
-    //         echo $time_cache;
-    //     }
-    // }
-    
+ 
+ ob_start();
     echo '<!DOCTYPE html>';
     echo '<html lang="vi">';
     $head='<head>';
@@ -51,5 +51,7 @@
     echo $head;
         require_once(get_stylesheet_directory().'/templates/single/main.php');
     echo '</html>';
-
+$html_content = ob_get_clean();
+set_cache('shopseo_posts',$id,$time_now,$html_content);
+die($html_content);
 ?>

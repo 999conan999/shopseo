@@ -1,25 +1,11 @@
 <?php
 
-    $common= get_common();//
     $home_url=get_home_url();
     $home_name=str_replace('https://', '', $home_url);
     $home_name=str_replace('http://', '', $home_name);
     $post_infor=get_post_infor($id);
     $comments_id=$post_infor->comments_id==-1?$id:$post_infor->comments_id;
-    // var_dump($post_infor->comments);
-    // $metaA=get_post_meta($id,'metaA', true);
-    // $data_metaA=json_decode($metaA);
-    // if($data_metaA==NULL){
-    //     header("Location: ".$home_url,TRUE,301);
-    //     die();
-    // }
-    // $current_url=get_permalink($id);
-    // $category_parent=-1;// khong tac dung gi ca
-    // if (!property_exists($data_metaA, 'title')) {
-    //     $data_metaA->title=$data_metaA->titleS;
-    //     $data_metaA->long_des=get_post_field('post_content', $id);
-    // }
-    // // 
+ 
     // $year=date("Y");
     // $vote= $id+($year-2000)*10+date("m")*2;
     // $rate=4+rand(0,9)/10;

@@ -23,8 +23,7 @@
                     <div class="see-more" id="see-more" style="background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));"><button id="btn-more" onclick="set_more()">Xem thêm</button></div>
                 </section>
                 <section id="nhan-xet" class="wrapz-bl container ">
-                    <h3 class="h6 heading re">Bình luận:<span class="rating__stars blx" style="--rating: 5;"></span>
-                    </h3>
+                    <h3 class="h6 heading re">Bình luận:<span class="rating__stars blx" style="--rating: 5;"></span></h3>
                     <div class="wrap-vbl">
                         <div class="blxx">
                             <b  class="vietBinhLuan" onclick="show_input_com()">Viết bình luận:</b>
@@ -65,6 +64,5 @@
     <script src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/jquery.js"></script>
     <script src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/js.js"></script>
     <script src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/js-sp.js"></script>
-
-    <!-- <script type="text/javascript"> document.addEventListener('copy', function (e) { e.preventDefault(); }); document.addEventListener('contextmenu', function (e) { e.preventDefault(); }); </script> -->
+    <script type="text/javascript"> document.addEventListener('copy', function (e) { e.preventDefault(); }); document.addEventListener('contextmenu', function (e) { e.preventDefault(); }); </script>
 </body>

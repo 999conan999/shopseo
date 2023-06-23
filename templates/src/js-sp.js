@@ -353,59 +353,29 @@ function submit_com() {
     }
 }
 // xu ly xem them
-var page_com=0;
-function set_more_bl(){
-    let data= {
-        is_show_more:false,
-        html_bl:`<div class="w1"> <b>Văn Nam</b>
-        <span class="icon-cartx comx"></span>
-        <i>Đã mua tại anbinhnew.com</i>
-        <p>Sản phẩm chắc chắn, đẹp, giao hàng nhanh, giá tốt, hài lòng nè</p>
-        <div class="w-img-com row">
-            <div class="dev-3 pdr-3">
-                <img class="img-com" src="https://anbinhnew.com/wp-content/uploads/2023/04/giuong-mi-thuat-5.jpg" width="100%">
-            </div>
-            <div class="dev-3 pdr-3">
-                <img class="img-com" src="https://anbinhnew.com/wp-content/uploads/2023/04/giuong-mi-thuat-5.jpg" width="100%">
-            </div>
-            <div class="dev-3 pdr-3">
-                <img class="img-com" src="https://anbinhnew.com/wp-content/uploads/2023/04/giuong-mi-thuat-5.jpg" width="100%">
-            </div>
-        </div>
-        <span class="rep">Trả lời</span>
-        <div class="w1 w2"> <b>Shop</b>
-            <p>Cảm ơn đã sử dụng dịch vụ của chúng tôi!</p>
-        </div>
-    </div><div class="w1"> <b>Văn Nam</b>
-    <span class="icon-cartx comx"></span>
-    <i>Đã mua tại anbinhnew.com</i>
-    <p>Sản phẩm chắc chắn, đẹp, giao hàng nhanh, giá tốt, hài lòng nè</p>
-    <div class="w-img-com row">
-        <div class="dev-3 pdr-3">
-            <img class="img-com" src="https://anbinhnew.com/wp-content/uploads/2023/04/giuong-mi-thuat-5.jpg" width="100%">
-        </div>
-        <div class="dev-3 pdr-3">
-            <img class="img-com" src="https://anbinhnew.com/wp-content/uploads/2023/04/giuong-mi-thuat-5.jpg" width="100%">
-        </div>
-        <div class="dev-3 pdr-3">
-            <img class="img-com" src="https://anbinhnew.com/wp-content/uploads/2023/04/giuong-mi-thuat-5.jpg" width="100%">
-        </div>
-    </div>
-    <span class="rep">Trả lời</span>
-    <div class="w1 w2"> <b>Shop</b>
-        <p>Cảm ơn đã sử dụng dịch vụ của chúng tôi!</p>
-    </div>
-        </div>`
-    };
-    if(data.is_show_more!=undefined){
-        var commentsDiv = document.getElementById("comments");
-        commentsDiv.innerHTML = commentsDiv.innerHTML+data.html_bl;
-        page_com++;
-        if(!data.is_show_more){
+var page_com=1;
+async function set_more_bl(){
+    let id = document.getElementById("writecom").getAttribute("value");
+    let home_url = document.getElementById("writecom").getAttribute("data");
+    const url = home_url+`/wp-content/themes/shopseo/templates/ajax/comments/user_get_comments.php?id=${id}&page=${page_com}`;
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        if(data.status!=undefined){
+            var commentsDiv = document.getElementById("comments");
+            commentsDiv.innerHTML = commentsDiv.innerHTML+data.html;
+            page_com++;
+            if(!data.status){
+                document.getElementById("morex").style.display = "none";
+            }
+        }else{
             document.getElementById("morex").style.display = "none";
         }
-    }else{
-        document.getElementById("morex").style.display = "none";
-    }
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
+
 }
   

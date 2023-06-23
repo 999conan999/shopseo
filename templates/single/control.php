@@ -6,6 +6,7 @@
     $home_name=str_replace('http://', '', $home_name);
     $post_infor=get_post_infor($id);
     $comments_id=$post_infor->comments_id==-1?$id:$post_infor->comments_id;
+    // var_dump($post_infor->comments);
     // $metaA=get_post_meta($id,'metaA', true);
     // $data_metaA=json_decode($metaA);
     // if($data_metaA==NULL){

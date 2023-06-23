@@ -47,7 +47,10 @@
         <div class="col-sm-12 dev-8 col-md-8">
             <span class="title-dt" id="get-tt"><?php echo $post_infor->title?></span>
             <div class="re rv">
-                <span class="rating__stars" style="--rating: 5;"></span><a href="#nhan-xet" class="danh-gia">(Xem 56 lượt đánh giá)</a>
+                <span class="rating__stars" style="--rating: 5;"></span>
+                <?php if($post_infor->comments->html!=""){ ?>
+                <a href="#nhan-xet" class="danh-gia">(Xem <?php echo rand(55, 199); ?> lượt đánh giá)</a>
+                <?php } ?>
             </div>
             <div class="price">
                 <p class="danh-price"><span class="fxt">Giá mua :</span> <ins class="txt-price-alt" id="gia-mua"><?php echo number_format($price_ins, 0, ".", ".");?> ₫ </ins></p>

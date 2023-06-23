@@ -32,33 +32,10 @@
                         <div id="writecom" data="<?php echo $home_url; ?>" value="<?php echo $comments_id; ?>" class="wpc" style="height:0px;overflow:hidden;"></div>
                     </div>
                     <div class="comment re" id="comments">
-                        <div class="w1"> <b>Văn Nam</b>
-                            <span class="icon-cartx comx"></span>
-                            <i>Đã mua tại anbinhnew.com</i>
-                            <p>Sản phẩm chắc chắn, đẹp, giao hàng nhanh, giá tốt, hài lòng nè</p>
-                            <div class="w-img-com row">
-                                <div class="dev-3 pdr-3">
-                                    <img class="img-com"
-                                        src="https://anbinhnew.com/wp-content/uploads/2023/04/giuong-mi-thuat-5.jpg"
-                                        width="100%">
-                                </div>
-                                <div class="dev-3 pdr-3">
-                                    <img class="img-com"
-                                        src="https://anbinhnew.com/wp-content/uploads/2023/04/giuong-mi-thuat-5.jpg"
-                                        width="100%">
-                                </div>
-                                <div class="dev-3 pdr-3">
-                                    <img class="img-com"
-                                        src="https://anbinhnew.com/wp-content/uploads/2023/04/giuong-mi-thuat-5.jpg"
-                                        width="100%">
-                                </div>
-                            </div>
-                            <span class="rep">Trả lời</span>
-                            <div class="w1 w2"> <b>Shop</b>
-                                <p>Cảm ơn đã sử dụng dịch vụ của chúng tôi!</p>
-                            </div>
-                        </div>
+                        <?php echo $post_infor->comments->html; ?>
+                        <?php if($post_infor->comments->status){ ?>
                         <div class="see-more" id="morex" style="background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255))"><button id="btn-more" onclick="set_more_bl()">Xem thêm bình luận</button></div>
+                        <?php } ?>
                     </div>
                 </section>
             </div>

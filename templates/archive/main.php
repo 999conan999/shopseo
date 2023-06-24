@@ -30,6 +30,7 @@
                     <div class="wrap-list">
                         <?php 
                             $list_sp=$data->list_sp;
+                            $text_id='';
                             foreach($data->dm as $x){
                                 if(count($x->sp_list_id)){
                                 $id_url=fixForUri($x->name);
@@ -43,6 +44,7 @@
                                 <?php 
                                     foreach($x->sp_list_id as $id_sp){
                                         if (isset($list_sp[$id_sp])) {
+                                            $text_id.=','.$id_sp.',';
                                         $price_ins=(int)$list_sp[$id_sp]['price'];
                                 ?>
                                     <li class="lza col-12 col-md-4 col-xl-3"><a class="card-3" href="<?php echo $list_sp[$id_sp]['url']; ?>" title="<?php echo $list_sp[$id_sp]['title']; ?>" target="_blank">
@@ -59,6 +61,19 @@
                         <?php }} ?>
                     </div>
                 </div>
+                <?php 
+                    $i=0;$rs='';
+                        foreach ($list_sp as $id => $products) {
+                            $s=','.$id.',';
+                            if(strpos($text_id, $s)===false&&$i<10){
+                        $rs.='<li class="bv-cart col-6 col-md-4 col-xl-3 ">';
+                        $rs.='<a class="a-bv" href="'.$products["url"].'" title="'.$products['title'].'" target="_blank" >';
+                        $rs.='<img src="'.$products['thumnail']->url150.'" width="80px" height="80px">';
+                        $rs.='<p style=" font-size: 12px;margin-bottom: 3px; ">'.$products['title'].'</p></a>';
+                        $rs.='</li>';
+                        }} 
+                        if($rs!=''){
+                        ?>
                 <div class="sty">
                     <div class="wrap-list">
                         <div class="lis-category">
@@ -68,19 +83,13 @@
                             </div>
                             <div class="wza-home">
                                 <ul class="cart-u row">
-
-                                    <li class="bv-cart col-6 col-md-4 col-xl-3 ">
-                                        <a class="a-bv" href="#" title="Giường ống tròn đơn giản 1m6x2m" target="_blank" >
-                                            <img class="lazyload" data-srcset="https://anbinhnew.com/wp-content/uploads/2023/04/giuong-ngu-giuong-sat-don-gian-mau-den-gia-re.jpg" width="80px" height="80px">
-                                            <p style=" font-size: 12px;margin-bottom: 3px; ">Giường ống tròn đơn giản 1m6x2m giá rẻ nhất hành tinh thế giới</p>
-                                        </a>
-                                    </li>
- 
+                                    <?php echo $rs;?>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+                <?php } ?>
             </section>
         </main>
     <?php echo $footer; ?>

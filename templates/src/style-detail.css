@@ -464,6 +464,8 @@ p.danh-price {
     left: 0px;
     background-color: #717171cc;
     z-index: 999999;
+    transition: all 0.2s linear 0s;
+    opacity: 0;
 }
 .wrap-check-kt {
     padding: 2vh 0px;

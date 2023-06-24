@@ -108,11 +108,18 @@ function set_kt(img){
 function show_check_kt(){
 try{
     document.getElementById("check-kt").style.display = "block";
+    setTimeout(()=>{
+        document.getElementById("check-kt").style.opacity = "1";
+    },100)
 }catch(e){}
 }
 function hiden_check_kt(){
 try{
+        document.getElementById("check-kt").style.opacity = "0";
+setTimeout(()=>{
     document.getElementById("check-kt").style.display = "none";
+    // document.getElementById("check-kt").style.opacity = "0";
+},300)
 }catch(e){}
 }
 function action_change_kt(i){

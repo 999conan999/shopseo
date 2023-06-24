@@ -8,6 +8,16 @@ function get_common(){
         return new stdClass();
     }
 }
+function get_page_infor($id){
+    global $wpdb;
+    $table_prefix=$wpdb->prefix .'shopseo_posts';
+         $sql = $wpdb->prepare( "SELECT quantity_sold,thumnail,related_keyword,id_category,is_best_seller,json_data FROM $table_prefix WHERE id_post = %d",$id);
+    $results = $wpdb->get_results( $sql , OBJECT );
+    $json_data=json_decode($results[0]->json_data); 
+    $json_data->id=$id;
+    //
+    return $json_data;
+}
 function get_post_infor($id){
     global $wpdb;
     $table_prefix=$wpdb->prefix .'shopseo_posts';

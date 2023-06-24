@@ -1,6 +1,7 @@
 <?php
 
     $home_url=get_home_url();
+    $type='post';
     $home_name=str_replace('https://', '', $home_url);
     $home_name=str_replace('http://', '', $home_name);
     $post_infor=get_post_infor($id);

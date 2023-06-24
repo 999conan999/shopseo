@@ -56,7 +56,9 @@ $footer='<footer id="footerz-dt">';
              $footer.='<li onclick="show_cart()"><a id="my-cart" onclick="window.value=60000"><span class="icon-cartx icon-messenger re"><b class="notify" id="cart-2">0</b></span></a><span class="aml-text-content aml-tooltiptext">Giỏ hàng</span></li>';
         $footer.='</ul>';
     $footer.='</div>';
+    if($type=="post"){
     $footer.='<div id="scrollTop" class="contactsx"><div class="rap-contanct">👉<a href="'.$post_infor->cate->url.'" class="contacktsx re" target="_blank" title="'.$post_infor->key_word.'">Xem thêm: '.$post_infor->key_word.'<span class="anime">1</span></a></div></div>';
+    }
     $footer.='<div id="popup-cart" class="popup-cart"></div>';
     $footer.='<div id="check-kt" class="check-kt" onclick="hiden_check_kt()"></div>';
 $footer.='</footer>';

@@ -467,6 +467,11 @@ p.danh-price {
     transition: all 0.2s linear 0s;
     opacity: 0;
 }
+@media (max-width: 767px){
+    .check-kt {
+        transition:none;
+    }
+}
 .wrap-check-kt {
     padding: 2vh 0px;
     height: 100vh;

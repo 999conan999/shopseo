@@ -126,10 +126,14 @@ function get_comments_shopseo($id_post,$page){//
   return($obj);
 }
 // get time and data cache
-function get_cache_by_table_name($table_name,$id_post){
+function get_cache_by_table_name($table_name,$id_post,$is_term=false){
     global $wpdb;
     $table_prefix=$wpdb->prefix .$table_name;
-         $sql = $wpdb->prepare( "SELECT time_cache,data_cache FROM $table_prefix WHERE id_post= %d ORDER BY id DESC ",$id_post);
+    if($is_term){
+        $sql = $wpdb->prepare( "SELECT time_cache,data_cache FROM $table_prefix WHERE id_term= %d ORDER BY id DESC ",$id_post);
+    }else{
+        $sql = $wpdb->prepare( "SELECT time_cache,data_cache FROM $table_prefix WHERE id_post= %d ORDER BY id DESC ",$id_post);
+    }
     $results = $wpdb->get_results( $sql , OBJECT );
     $o = new stdClass();
     if(count($results)>0){
@@ -147,18 +151,27 @@ function get_cache_by_table_name($table_name,$id_post){
     return $o;
 }
 // set cache
-function set_cache($table_name,$id,$time_now,$html_content){
+function set_cache($table_name,$id,$time_now,$html_content,$is_term=false){
     $data = array(
         'time_cache'=> $time_now,
         'data_cache'=> $html_content,
     );
     global $wpdb;
     $table = $wpdb->prefix . $table_name;
-    $rs=$wpdb->update(
-        $table,
-        $data,
-        array('id_post' => $id)
-    );
+    if($is_term){
+        $rs=$wpdb->update(
+            $table,
+            $data,
+            array('id_term' => $id)
+        );
+    }else{
+        $rs=$wpdb->update(
+            $table,
+            $data,
+            array('id_post' => $id)
+        );
+    }
+
 }
 if (!function_exists('fixForUri')) {
     function fixForUri($strX, $options = array()) {

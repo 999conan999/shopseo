@@ -2,19 +2,18 @@
     require_once(get_stylesheet_directory().'/templates/fs_common_theme.php');
     $obj=get_queried_object();
     $id=$obj->term_id;
-    
         // // xu ly cache
-        // $common= get_common();
-        // $time_now=time();
-        // $o=get_cache_by_table_name('shopseo_posts',$id);
-        // if($o->time_cache>0){
-        //     $limit_time=(int)$common->time_cache;
-        //     $denta=$time_now-$o->time_cache;
-        //     if($denta<$limit_time){
-        //         echo $o->data_cache;
-        //         die();
-        //     }
-        // }
+        $common= get_common();
+        $time_now=time();
+        $o=get_cache_by_table_name('shopseo_terms',$id,true);
+        if($o->time_cache>0){
+            $limit_time=(int)$common->time_cache;
+            $denta=$time_now-$o->time_cache;
+            if($denta<$limit_time){
+                echo $o->data_cache;
+                die();
+            }
+        }
 
         require_once(get_stylesheet_directory().'/templates/archive/control.php');
         require_once(get_stylesheet_directory().'/templates/header/header.php'); 
@@ -52,6 +51,6 @@
             require_once(get_stylesheet_directory().'/templates/archive/main.php');
         echo '</html>';
     $html_content = ob_get_clean();
-    // set_cache('shopseo_posts',$id,$time_now,$html_content);
+    set_cache('shopseo_terms',$id,$time_now,$html_content,true);
     die($html_content);
 ?>

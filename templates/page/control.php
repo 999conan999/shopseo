@@ -1,6 +1,6 @@
 <?php
 
-    $common= get_common();//
+    // $common= get_common();//
     $type='page';
     $home_url=get_home_url();
     $home_name=str_replace('https://', '', $home_url);

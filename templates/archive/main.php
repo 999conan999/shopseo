@@ -63,9 +63,9 @@
                 </div>
                 <?php 
                     $i=0;$rs='';
-                        foreach ($list_sp as $id => $products) {
-                            $s=','.$id.',';
-                            if(strpos($text_id, $s)===false&&$i<10){
+                        foreach ($list_sp as $idx => $products) {
+                            $s=','.$idx.',';
+                            if(strpos($text_id, $s)===false&&$i<12){
                         $rs.='<li class="bv-cart col-6 col-md-4 col-xl-3 ">';
                         $rs.='<a class="a-bv" href="'.$products["url"].'" title="'.$products['title'].'" target="_blank" >';
                         $rs.='<img src="'.$products['thumnail']->url150.'" width="80px" height="80px">';

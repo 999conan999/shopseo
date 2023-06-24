@@ -20,7 +20,7 @@ function get_posts_shopseo($id_cate){// search phone or email ~~ '' => get all
      $object->key_word=$x->key_word;
      $object->type=$x->post_type;
      $object->status=$x->post_status;
-     $object->url=get_permalink($x->id_post);;
+     $object->url=get_permalink($x->id_post);
      $object->is_best_seller=$x->is_best_seller;
      array_push($rs,$object);
    }

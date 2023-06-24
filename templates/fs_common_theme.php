@@ -13,8 +13,35 @@ function get_page_infor($id){
     $table_prefix=$wpdb->prefix .'shopseo_posts';
          $sql = $wpdb->prepare( "SELECT quantity_sold,thumnail,related_keyword,id_category,is_best_seller,json_data FROM $table_prefix WHERE id_post = %d",$id);
     $results = $wpdb->get_results( $sql , OBJECT );
+    if(count($results)>0){
+        $json_data=json_decode($results[0]->json_data); 
+        $json_data->id=$id;
+        return $json_data;
+    }else{
+        die();
+    }
+}
+function get_cate_infor($id){
+    global $wpdb;
+    $table_prefix=$wpdb->prefix .'shopseo_terms';
+    $sql = $wpdb->prepare( "SELECT json_data FROM $table_prefix WHERE id_term = %d",$id);
+    $results = $wpdb->get_results( $sql , OBJECT );
+    if(count($results)==0) die();
     $json_data=json_decode($results[0]->json_data); 
     $json_data->id=$id;
+    $json_data->url=get_category_link($id);
+    //
+    global $wpdb;
+    $table_prefix=$wpdb->prefix .'shopseo_posts';
+         $sql = $wpdb->prepare( "SELECT id_post,thumnail,title,price,quantity_sold FROM $table_prefix WHERE id_category = %d ORDER BY id DESC ",$id);
+    $results = $wpdb->get_results( $sql , ARRAY_A );
+    $list_sp=[];
+    foreach($results as $x){
+      $x['thumnail']=json_decode($x['thumnail']);
+      $x['url']=get_permalink($x['id_post']);
+      $list_sp[$x['id_post']]=$x;
+    }
+    $json_data->list_sp=($list_sp);
     //
     return $json_data;
 }
@@ -23,7 +50,7 @@ function get_post_infor($id){
     $table_prefix=$wpdb->prefix .'shopseo_posts';
          $sql = $wpdb->prepare( "SELECT quantity_sold,thumnail,related_keyword,id_category,is_best_seller,json_data FROM $table_prefix WHERE id_post = %d",$id);
     $results = $wpdb->get_results( $sql , OBJECT );
- 
+    if(count($results)==0) die();
     $json_data=json_decode($results[0]->json_data); 
     $json_data->id=$id;
     $json_data->quantity_sold=$results[0]->quantity_sold;
@@ -132,5 +159,55 @@ function set_cache($table_name,$id,$time_now,$html_content){
         $data,
         array('id_post' => $id)
     );
+}
+if (!function_exists('fixForUri')) {
+    function fixForUri($strX, $options = array()) {
+        $str=delete_all_between("(",")",$strX);
+        // Make sure string is in UTF-8 and strip invalid UTF-8 characters
+        $str = mb_convert_encoding((string)$str, 'UTF-8', mb_list_encodings());
+        
+        $defaults = array(
+            'delimiter' => '-',
+            'limit' => null,
+            'lowercase' => true,
+            'replacements' => array(),
+            'transliterate' => true,
+        );
+        
+        // Merge options
+        $options = array_merge($defaults, $options);
+        
+        // Lowercase
+        if ($options['lowercase']) {
+            $str = mb_strtolower($str, 'UTF-8');
+        }
+        
+        $char_map = array(
+            // Latin
+            'á' => 'a', 'à' => 'a', 'ả' => 'a', 'ã' => 'a', 'ạ' => 'a', 'ă' => 'a', 'ắ' => 'a', 'ằ' => 'a', 'ẳ' => 'a', 'ẵ' => 'a', 'ặ' => 'a', 'â' => 'a', 'ấ' => 'a', 'ầ' => 'a', 'ẩ' => 'a', 'ẫ' => 'a', 'ậ' => 'a', 'đ' => 'd', 'é' => 'e', 'è' => 'e', 'ẻ' => 'e', 'ẽ' => 'e', 'ẹ' => 'e', 'ê' => 'e', 'ế' => 'e', 'ề' => 'e', 'ể' => 'e', 'ễ' => 'e', 'ệ' => 'e', 'í' => 'i', 'ì' => 'i', 'ỉ' => 'i', 'ĩ' => 'i', 'ị' => 'i', 'ó' => 'o', 'ò' => 'o', 'ỏ' => 'o', 'õ' => 'o', 'ọ' => 'o', 'ô' => 'o', 'ố' => 'o', 'ồ' => 'o', 'ổ' => 'o', 'ỗ' => 'o', 'ộ' => 'o', 'ơ' => 'o', 'ớ' => 'o', 'ờ' => 'o', 'ở' => 'o', 'ỡ' => 'o', 'ợ' => 'o', 'ú' => 'u', 'ù' => 'u', 'ủ' => 'u', 'ũ' => 'u', 'ụ' => 'u', 'ư' => 'u', 'ứ' => 'u', 'ừ' => 'u', 'ử' => 'u', 'ữ' => 'u', 'ự' => 'u', 'ý' => 'y', 'ỳ' => 'y', 'ỷ' => 'y', 'ỹ' => 'y', 'ỵ' => 'y'
+        );
+        
+        // Make custom replacements
+        $str = preg_replace(array_keys($options['replacements']), $options['replacements'], $str);
+        
+        // Transliterate characters to ASCII
+        if ($options['transliterate']) {
+            $str = str_replace(array_keys($char_map), $char_map, $str);
+        }
+        
+        // Replace non-alphanumeric characters with our delimiter
+        $str = preg_replace('/[^\p{L}\p{Nd}]+/u', $options['delimiter'], $str);
+        
+        // Remove duplicate delimiters
+        $str = preg_replace('/(' . preg_quote($options['delimiter'], '/') . '){2,}/', '$1', $str);
+        
+        // Truncate slug to max. characters
+        $str = mb_substr($str, 0, ($options['limit'] ? $options['limit'] : mb_strlen($str, 'UTF-8')), 'UTF-8');
+        
+        // Remove delimiter from ends
+        $str = trim($str, $options['delimiter']);
+        
+        return $str;
+    }
 }
 ?>

@@ -210,7 +210,9 @@ function set_more(){
 try{
     if(window.is_more==undefined||window.is_more==null||window.is_more==false){
         window.is_more=true;
-        document.getElementById("long-des").style.height = "auto";
+        var divElement = document.getElementById('long-des');
+        var contentHeight = divElement.scrollHeight;
+        document.getElementById("long-des").style.height = contentHeight+"px";
         document.getElementById("see-more").style.height = "0px";
         document.getElementById("btn-more").innerHTML = "Thu gọn";
     }else{

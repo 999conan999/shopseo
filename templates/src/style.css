@@ -1610,6 +1610,7 @@ ul.cart-w.row {
 }
 .long-des{
     overflow: hidden;
+    transition: all 1s linear;
 }
 .long-des p {
     padding: 7px;

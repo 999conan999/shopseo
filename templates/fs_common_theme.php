@@ -8,10 +8,50 @@ function get_common(){
         return new stdClass();
     }
 }
+function get_home_infor($id){
+    global $wpdb;
+    $table_prefix=$wpdb->prefix .'shopseo_posts';
+         $sql = $wpdb->prepare( "SELECT json_data FROM $table_prefix WHERE id_post = %d",$id);
+    $results = $wpdb->get_results( $sql , OBJECT );
+    if(count($results)>0){
+        $json_data=json_decode($results[0]->json_data); 
+        $json_data->id=$id;
+        //
+        $json_data->best_saller=get_sp_card($id,12,true);
+        //
+        $table_prefix=$wpdb->prefix .'shopseo_terms';
+        $sql = $wpdb->prepare( "SELECT id_term,thumnail,title FROM $table_prefix ORDER BY id_term DESC");
+        $results = $wpdb->get_results( $sql , OBJECT );
+        $arr=array();
+        $i=0;
+        $html_xu_huong='';
+        foreach($results as $x){
+            $i++;
+            if($i<11){
+                $url=get_category_link($x->id_term);
+                $thumnail=json_decode($x->thumnail);
+                $html_xu_huong.=' <div class="col-6 col-md-3 col-xl-2"><a class="refz" href="'.$url.'" title="'.$x->title.'"><img src="'.$thumnail->url150.'" width="64px" height="64px"><p>'.$x->title.'</p></a></div>';
+                $obj= new stdClass();
+                $obj->name=$x->title;
+                $obj->url=$url;
+                $obj->sp_html=get_sp_card($x->id_term,12,false);
+                array_push($arr,$obj);
+            }
+            // 
+        }
+        $json_data->html_xu_huong=$html_xu_huong;
+        $json_data->category_data_list=$arr;
+        $json_data->new_post=get_new_post(12);
+        //
+        return $json_data;
+    }else{
+        die();
+    }
+}
 function get_page_infor($id){
     global $wpdb;
     $table_prefix=$wpdb->prefix .'shopseo_posts';
-         $sql = $wpdb->prepare( "SELECT quantity_sold,thumnail,related_keyword,id_category,is_best_seller,json_data FROM $table_prefix WHERE id_post = %d",$id);
+         $sql = $wpdb->prepare( "SELECT json_data FROM $table_prefix WHERE id_post = %d",$id);
     $results = $wpdb->get_results( $sql , OBJECT );
     if(count($results)>0){
         $json_data=json_decode($results[0]->json_data); 
@@ -222,5 +262,36 @@ if (!function_exists('fixForUri')) {
         
         return $str;
     }
+}
+function get_sp_card($id,$sl=12,$is_best_saller=false){
+        // best saler
+        global $wpdb;
+        $table_prefix=$wpdb->prefix .'shopseo_posts';
+        if($is_best_saller){
+             $sql = $wpdb->prepare( "SELECT id_post,thumnail,title,quantity_sold,price FROM $table_prefix WHERE is_best_seller = 'true' AND post_status = 'publish' ORDER BY quantity_sold DESC LIMIT %d OFFSET 0",$sl);
+        }else{
+            $sql = $wpdb->prepare( "SELECT id_post,thumnail,title,quantity_sold,price FROM $table_prefix WHERE id_category = %d AND post_status = 'publish' ORDER BY id DESC LIMIT %d OFFSET 0",$id,$sl);
+        }
+        $results = $wpdb->get_results( $sql , OBJECT );
+        $html='';
+        foreach($results as $x){
+          $thumnail = json_decode($x->thumnail);
+          $price_ins=(int)$x->price;
+            $html.='<li class="lza col-6 col-md-3 col-xl-2 lza-home"><a class="card-3 card-3-home" href="'.get_permalink($x->id_post).'" title="'.$x->title.'" target="_blank" ><div class="imgz-cart danhdev-product"><img class="zz lazyload" data-src="'.$thumnail->url300.'" src="'.$thumnail->url.'"></div><p style=" font-size: 12px;margin-bottom: 3px; ">'.$x->title.'</p><div style=" padding-left: 8px;padding-bottom: 10px; "><ins style=" font-size: 14px; " class="ins-cost costz">'.number_format($price_ins, 0, ".", ".").' đ</ins></div><div class="rating" style=" position: absolute; right: 0px; bottom: -3px; "><span class="star" style=" font-size: 12px; ">Đã bán: <b>'.$x->quantity_sold.'</b></span></div></a></li>';
+        }
+        return $html;
+}
+function get_new_post($sl){
+    // best saler
+    global $wpdb;
+    $table_prefix=$wpdb->prefix .'shopseo_posts';
+    $sql = $wpdb->prepare( "SELECT id_post,thumnail,title FROM $table_prefix WHERE post_status = 'publish' ORDER BY id DESC LIMIT %d OFFSET 0",$sl);
+    $results = $wpdb->get_results( $sql , OBJECT );
+    $html='';
+    foreach($results as $x){
+      $thumnail = json_decode($x->thumnail);
+        $html.='<li class="bv-cart col-6 col-md-4 col-xl-3 "><a class="a-bv" href="'.get_permalink($x->id_post).'" title="'.$x->title.'" target="_blank" ><img src="'.$thumnail->url150.'" width="80px" height="80px"><p style=" font-size: 12px;margin-bottom: 3px; ">'.$x->title.'</p></a></li>';
+    }
+    return $html;
 }
 ?>

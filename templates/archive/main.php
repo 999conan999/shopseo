@@ -2,8 +2,8 @@
  
     <div id="root" style="overflow:hidden;">
     <?php echo $header; ?>
-        <main class="mainz" style=" background-color: #ffffff; ">
-            <section class="contents container">
+        <main class="mainz"  style="background-color: #f2f2f2;overflow-x: hidden;display: flex;flex-direction: column-reverse;padding-bottom: 24px;">
+            <section class="contents container lock">
                 <h1 class="title"><?php echo $data->title; ?></h1>
                 <div class="long-des">
                     <blockquote>
@@ -12,7 +12,7 @@
                     <?php echo $data->long_des; ?>
                 </div>
             </section>
-            <section class="container gt1 wrapcontentHome">
+            <section class="container gt1 wrapcontentHome lock">
                 <?php if(count($data->related_list)>0){ ?>
                 <h2 class="xuhms">Xu Hướng mua sắm</h2>
                 <div class="row category-mn">

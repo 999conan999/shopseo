@@ -16,8 +16,6 @@
         <?php echo $footer; ?>
     </div>
     <script type="text/javascript">
-        document.getElementById("contents-dt").style.display = "block";
-        document.getElementById("footerz-dt").style.display = "block";
     </script>
     <script src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/js.js"></script>
     <script type="text/javascript"> document.addEventListener('copy', function (e) { e.preventDefault(); }); document.addEventListener('contextmenu', function (e) { e.preventDefault(); }); </script>

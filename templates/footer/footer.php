@@ -1,5 +1,5 @@
 <?php
-$footer='<footer id="footerz-dt">';
+$footer='<footer id="footerz-dt" class="lock">';
     $footer.='<div class="content-footer">';
         $footer.='<div class="container">';
             $footer.='<div class="row">';

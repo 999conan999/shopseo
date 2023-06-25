@@ -5,16 +5,16 @@
     $price_del=$price_ins+(int)$att->table_price[$index_price]->price_og;
     $table_price=array();
 ?>
-<section class="container gt1 wrapcontentHome">
+<section class="container gt1 wrapcontentHome lock" style=" min-height: 545px; ">
     <nav class="woocommerce-breadcrumb breadcrumbs">
         <a href="<?php echo $home_url?>" title="Trang chủ <?php echo $home_name;?>">Trang chủ</a>
         <span>/</span>
         <a href="<?php echo $post_infor->cate->url;?>" title="<?php echo $post_infor->cate->title;?>"><?php echo $post_infor->cate->title;?></a>
     </nav>
     <div class="row wr-dt-slide">
-        <div class="col-sm-12 dev-4 col-md-4" id="get-width">
+        <div class="col-sm-12 dev-4 col-md-4">
             <?php  if(count($post_infor->img_sp->imgs_list)>0){ ?>
-            <div id="set-height">
+            <div>
                 <div class="product owl-carousel slideProduct">
                     <?php 
                         $i=0;
@@ -29,7 +29,7 @@
                                 $small_img_html.='<div> <div class="item"><a class="clear-e" href="'.$x->url.'" title="'.$post_infor->title." ".$i.'"><img src="'.$x->url300.'" alt="'.$post_infor->title." ".$i.'" title="'.$post_infor->title." ".$i.'" class="d-block w-100" /></a> </div> </div>'; 
                             }
                     ?>
-                    <div class="item get-img"><img class="owl-lazy" data-src="<?php echo $x->url; ?>" src="<?php echo $x->url300; ?>" alt="<?php echo $post_infor->title." ".$i; ?>" />
+                    <div class="item get-img imgz-cart"><img class="owl-lazy" data-src="<?php echo $x->url; ?>" src="<?php echo $x->url300; ?>" alt="<?php echo $post_infor->title." ".$i; ?>" />
                         <div class="w-btn-mua"><button class="btn-mua" onclick="set_kt('<?php echo $x->url; ?>')"><span class="icon-cartx"></span>Mua ngay!</button></div>
                     </div>
                     <?php }?>
@@ -38,10 +38,6 @@
                             <?php echo $small_img_html;?>
                 </div>
             </div>
-            <script type="text/javascript">
-                let w = document.getElementById("get-width").offsetWidth;
-                document.getElementById("set-height").style.minHeight = w / 0.83 + "px";
-            </script>
             <?php } ?>
         </div>
         <div class="col-sm-12 dev-8 col-md-8">

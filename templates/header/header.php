@@ -1,6 +1,6 @@
 <?php
 $header='<header id="header" class="header header-wrapper">';
-   $header.='<div class="colorz header-top">';
+   $header.='<div class="colorz header-top" style=" height: 40px; ">';
       $header.='<div class="container">';
          $header.='<div class="row">';
             $header.='<div class="col-12 col-lg-6 pd8">';
@@ -26,7 +26,7 @@ $header='<header id="header" class="header header-wrapper">';
          $header.='</div>';
          $header.='<div class="container setz">';
             $header.='<div class="row">';
-               $header.='<div class="col-12 col-lg-3 brz">';
+               $header.='<div class="col-12 col-lg-3 brz" style="height: 48px;">';
                   $header.='<div class="logo re"><a href="'.$home_url.'" title="Trang chủ '.$home_name.'"><img src="'.$common->logo_icon.'" class="header-logo-dark" alt="logo '.$home_name.'"></a></div>';
                $header.='</div>';
                $header.='<div class="col-12 col-lg-6 seah">';

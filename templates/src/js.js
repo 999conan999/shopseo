@@ -3,15 +3,15 @@ document.getElementById("menu-mb").addEventListener("click", () => {
     document.getElementById("set-menu").classList.remove("hide-menu");
     document.getElementById("set-menu").classList.add("show-menu");
  });
-try{
-    let ww = document.getElementsByClassName("danhdev-product")[0].offsetWidth;
-    var imgElements = document.querySelectorAll(".zz");
-    imgElements.forEach(e => {
-        e.style.height = (ww - 2) + "px";
-    });
-    let wz = document.getElementById("cccx").offsetWidth;
-    var uu = document.getElementById("ccck").style.height = wz + 'px';
- }catch(e){}
+// try{
+//     let ww = document.getElementsByClassName("danhdev-product")[0].offsetWidth;
+//     var imgElements = document.querySelectorAll(".zz");
+//     imgElements.forEach(e => {
+//         e.style.height = (ww - 2) + "px";
+//     });
+//     let wz = document.getElementById("cccx").offsetWidth;
+//     var uu = document.getElementById("ccck").style.height = wz + 'px';
+//  }catch(e){}
 function hide_menu(){
     document.getElementById("set-menu").classList.add("hide-menu");
     document.getElementById("set-menu").classList.remove("show-menu");

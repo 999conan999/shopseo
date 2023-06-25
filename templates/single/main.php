@@ -1,10 +1,9 @@
-
 <body>
     <div id="root" style="overflow:hidden;">
        <?php echo $header; ?>
-        <main class="mainz" style=" background-color: #f2f2f2; ">
+        <main class="mainz" style="background-color: #f2f2f2;overflow-x: hidden;display: flex;flex-direction: column-reverse;padding-bottom: 24px;">
             <div>
-                <section class="contents container re" id="contents-dt">
+                <section class="contents container re lock" id="contents-dt">
                     <h1 class="title"><?php echo $post_infor->title?></h1>
                     <div id="long-des" class="long-des" style="height: 200px;">
                         <blockquote class="link-dt"><?php echo $post_infor->short_des;?></blockquote>
@@ -22,7 +21,7 @@
                     </div>
                     <div class="see-more" id="see-more" style="background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));"><button id="btn-more" onclick="set_more()">Xem thêm</button></div>
                 </section>
-                <section id="nhan-xet" class="wrapz-bl container ">
+                <section id="nhan-xet" class="wrapz-bl container lock">
                     <h3 class="h6 heading re">Bình luận:<span class="rating__stars blx" style="--rating: 5;"></span></h3>
                     <div class="wrap-vbl">
                         <div class="blxx">
@@ -47,8 +46,6 @@
         <?php echo $footer; ?>
     </div>
     <script type="text/javascript">
-        document.getElementById("contents-dt").style.display = "block";
-        document.getElementById("footerz-dt").style.display = "block";
         <?php if($post_infor->type!="bv"){?>
         <?php
             $obj=new stdClass();

@@ -148,7 +148,6 @@ function my_theme_activation_hook() {
         dbDelta($sql);
     }
 
-
     //
     $table_name = $wpdb->prefix . 'shopseo_comments';
     $table_parent = $wpdb->prefix . 'posts';

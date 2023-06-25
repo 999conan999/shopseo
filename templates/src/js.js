@@ -71,12 +71,13 @@ function render_cart_pp(is_control=false){
     }
     let button_buy_wrap=``;
     if(total_price>0){
+        let home_url = document.getElementById("footer").getAttribute("data");
         button_buy_wrap=`<div class="wrap-tt" id="wrap-tt" style="right: ${is_control?0:'-300'}px;">
         <div class="tong-tien">
             <p style="text-align: center;"><span style="font-weight: 600;">Tổng tiền : </span><span id="price-sum" style=" color: blue; font-weight: 700; ">${Number(total_price).toLocaleString('vi-VN', {style : 'currency', currency : 'VND'})}</span></p>
         </div>
         <div class="btn-checkout">
-            <a href="/thanh-toan/" title="thanh toan" rel="nofollow">
+            <a href="${home_url}/thanh-toan/" title="thanh toan" rel="nofollow">
                 <button class="thanh-toan">Thanh toán</button>
             </a>
         </div>
@@ -92,6 +93,12 @@ function render_cart_pp(is_control=false){
         </div>
         <div class="dimer-popup" style=" width: 100%; height: 100%; " onclick="hiden_cartpp()"></div>`;
         document.getElementById("popup-cart").innerHTML = htmlContent;
+        let url=window.location.href;
+        if(url.search("thanh-toan")!=-1){
+            try{
+                render_sp_list()
+            }catch(e){}
+        }
 }
 
 //

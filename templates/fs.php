@@ -172,7 +172,7 @@ function my_theme_activation_hook() {
         dbDelta($sql);
     }
 
-    $table_name = $wpdb->prefix . 'shopseo_order';
+    $table_name = $wpdb->prefix . 'shopseo_orders';
     // Kiểm tra xem bảng đã tồn tại hay chưa
     if ($wpdb->get_var("SHOW TABLES LIKE '{$table_name}'") != $table_name) {
         $charset_collate = $wpdb->get_charset_collate();
@@ -183,6 +183,7 @@ function my_theme_activation_hook() {
             phone varchar(20) NOT NULL,
             address_1 text NOT NULL,
             note text NOT NULL,
+            order_status varchar(20) NOT NULL,
             data_carts longtext NULL,
             date_create text NOT NULL,
             PRIMARY KEY (id)

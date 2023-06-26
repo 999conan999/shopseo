@@ -2,9 +2,9 @@
     $parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
     require_once( $parse_uri[0] . 'wp-load.php' );
 
-    function delete_comment_by_id($id){
+    function delete_order_by_id($id){
         global $wpdb;
-        $table = $wpdb->prefix . 'shopseo_comments';
+        $table = $wpdb->prefix . 'shopseo_orders';
         $rs = $wpdb->delete(
         $table,
         array( 'id' => $id ),
@@ -18,6 +18,6 @@
     // if(is_user_logged_in()){
         if($_POST){
             $id=(int)$_POST['id'];
-             delete_comment_by_id($id);
+             delete_order_by_id($id);
         }
     // }

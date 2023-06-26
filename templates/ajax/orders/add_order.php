@@ -11,9 +11,10 @@
             'note'=> $note,
             'data_carts'=> $data_carts,
             'date_create'=> $time_now,
+            'order_status'=> 'check',
         );
         global $wpdb;
-        $table = $wpdb->prefix . 'shopseo_order';
+        $table = $wpdb->prefix . 'shopseo_orders';
         $rs=$wpdb->insert(
             $table,
             $data

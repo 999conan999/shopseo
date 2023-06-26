@@ -172,6 +172,24 @@ function my_theme_activation_hook() {
         dbDelta($sql);
     }
 
+    $table_name = $wpdb->prefix . 'shopseo_order';
+    // Kiểm tra xem bảng đã tồn tại hay chưa
+    if ($wpdb->get_var("SHOW TABLES LIKE '{$table_name}'") != $table_name) {
+        $charset_collate = $wpdb->get_charset_collate();
+        // Tạo câu truy vấn để tạo bảng
+        $sql = "CREATE TABLE {$table_name} (
+            id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            name_buyer text NULL,
+            phone varchar(20) NOT NULL,
+            address_1 text NOT NULL,
+            note text NOT NULL,
+            data_carts longtext NULL,
+            date_create text NOT NULL,
+            PRIMARY KEY (id)
+        ) {$charset_collate};";
+        // Thực hiện tạo bảng
+        dbDelta($sql);
+    }
 
 }
 

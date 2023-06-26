@@ -83,6 +83,9 @@ function fs_xoa(i){
         }
     }  
 }
+function fs_clear_order(){
+    localStorage.setItem("order_carts", JSON.stringify([]));
+}
 function disable_buy_btn(){
     document.getElementById("payment").style.visibility = "hidden";
 }
@@ -90,12 +93,11 @@ function disable_buy_btn(){
 function fs_buy(){
     let vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
     let home_url = document.getElementById("footer").getAttribute("data");
-    let name = document.getElementById("billing_first_name").value;
+    let name_buyer = document.getElementById("billing_first_name").value;
     let phone = document.getElementById("billing_phone").value;
-    let address = document.getElementById("billing_address_1").value;
+    let address_1 = document.getElementById("billing_address_1").value;
     let note = document.getElementById("order_comments").value;
-    console.log("🚀 ~ file: checkout.js:99 ~ fs_buy ~ note:", note)
-    if (name.length < 2) {
+    if (name_buyer.length < 2) {
         alert('Bạn chưa điền "Tên*".');
         reset_noti();
         document.getElementById("note1").style.display = "block";
@@ -103,16 +105,54 @@ function fs_buy(){
         alert('Số điện thoại không đúng!');
         reset_noti();
         document.getElementById("note2").style.display = "block";
-      } else if (address.length<16) {
+      } else if (address_1.length<16) {
         alert("Địa chỉ quá ngắn, vận chuyển sẽ không tìm được nhà của bạn.");
         reset_noti();
         document.getElementById("note3").style.display = "block";
       } else {
         reset_noti();
-        console.log("🚀 ~ file: checkout.js:93 ~ fs_buy ~ name:", name)
-        console.log("🚀 ~ file: checkout.js:95 ~ fs_buy ~ phone:", phone)
-        console.log("🚀 ~ file: checkout.js:97 ~ fs_buy ~ address:", address)
-            
+        let data_carts=localStorage.getItem("order_carts");
+        if(data_carts==null){
+            alert("Bạn chưa chọn sản phẩm!")
+            window.location.assign("../");
+        }else{
+            data_carts=JSON.parse(data_carts);
+            if(data_carts.length>0){
+                //
+                url=home_url+'/wp-content/themes/shopseo/templates/ajax/orders/add_order.php';
+                let data_send=new FormData();
+                data_send.append('note',note);
+                data_send.append('address_1',address_1);
+                data_send.append('phone',phone);
+                data_send.append('name_buyer',name_buyer);
+                data_send.append('data_carts',JSON.stringify(data_carts));
+                render_result('loading');
+                fetch(url, {
+                method: "POST",
+                body:data_send
+                })
+                .then(response => response.json())
+                .then(a => {
+                    if(a.status){
+                        render_result('ok',data_carts);
+                        fs_clear_order();
+                    }else{
+                        render_result("");
+                        alert("Lỗi, không gửi được bình luận.")
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    render_result("");
+                });
+                
+            }else{
+                alert("Bạn chưa chọn sản phẩm!")
+                window.location.assign("../");  
+            }
+        }
+
+        
       }
 }
 // 
@@ -120,4 +160,94 @@ function reset_noti(){
     document.getElementById("note1").style.display = "none";
     document.getElementById("note2").style.display = "none";
     document.getElementById("note3").style.display = "none";
+}
+//
+function render_result(type,data_carts=[]){
+    html='';
+    if(type=="loading"){
+        html=`<div style="position: fixed;width: 100%;height: 100%;background-color: #0e0e0ed6;top: 0px;left: 0px;z-index: 99;padding-left: 40%;padding-top: 40vh;">
+        <div class="load-wrapp">
+            <div class="load-6">
+                <div class="letter-holder">
+                    <div class="l-1 letter">L</div>
+                    <div class="l-2 letter">o</div>
+                    <div class="l-3 letter">a</div>
+                    <div class="l-4 letter">d</div>
+                    <div class="l-5 letter">i</div>
+                    <div class="l-6 letter">n</div>
+                    <div class="l-7 letter">g</div>
+                    <div class="l-8 letter">.</div>
+                    <div class="l-9 letter">.</div>
+                    <div class="l-10 letter">.</div>
+                </div>
+            </div>
+        </div>
+    </div>`
+    }
+    if(type=="ok"){
+        let list_sp_html='';
+        let home_url = document.getElementById("footer").getAttribute("data");
+        let name_buyer = document.getElementById("billing_first_name").value;
+        let phone = document.getElementById("billing_phone").value;
+        let address_1 = document.getElementById("billing_address_1").value;
+        let note = document.getElementById("order_comments").value;
+        let total_price=0;
+        data_carts.forEach(e => {
+            total_price+=(Number(e.price_sale)*Number(e.sl));
+            list_sp_html+=`<tr><td><span style="color: #333;">${e.title} - <b>${e.kt}</b></span></td> <td>${Number(e.price_sale).toLocaleString('vi-VN', {style : 'currency', currency : 'VND'})}</td> <td>${e.sl}</td> <td>${(Number(e.price_sale)*Number(e.sl)).toLocaleString('vi-VN', {style : 'currency', currency : 'VND'})}</td></tr>`
+        });
+        html=`<div style=" overflow-y: scroll;position: fixed; width: 100%; height: 100%; background-color: #0e0e0ed6; top: 0px; left: 0px; z-index: 99;">
+        <div class="container">
+            <div class="row" style=" margin: 40px -8px; ">
+                <div class="wrap-pp col-sm-8 col-md-6 col-lg-7">
+                    <div class="header-pp">
+                        <div class="check">
+                            <svg class="icon-check" style="margin: auto;font-size: 70px;fill: #33a938;"
+                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path
+                                    d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM371.8 211.8C382.7 200.9 382.7 183.1 371.8 172.2C360.9 161.3 343.1 161.3 332.2 172.2L224 280.4L179.8 236.2C168.9 225.3 151.1 225.3 140.2 236.2C129.3 247.1 129.3 264.9 140.2 275.8L204.2 339.8C215.1 350.7 232.9 350.7 243.8 339.8L371.8 211.8z" />
+                            </svg>
+                            
+                        </div>
+                        <div>
+                            <p style="
+                                font-size: 22px; margin-top: 12px; font-weight: 600; margin-left:
+                                12px; ">Đặt Hàng Thành Công!</p>
+                        </div>
+                    </div>
+                    <div class=" body-pp">
+                        <p style=" text-align: left; margin-bottom: 8px; color: currentColor; ">Thông tin đơn hàng :</p>
+                        <table style=" border-collapse: collapse; width: 100%; ">
+                            <tbody>
+                                <tr style=" background-color: burlywood; ">
+                                    <th>Tên sản phẩm</th>
+                                    <th>Giá thành</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                                ${list_sp_html}
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td style=" font-weight: 600; ">Tổng tiền: </td>
+                                    <td id="sum-price" style="font-weight: 600; color: blue;">${Number(total_price).toLocaleString('vi-VN', {style : 'currency', currency : 'VND'})}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div id="guess"><p style=" text-align: left; margin-bottom: 8px; color: currentColor;margin-top: 6px;"> Thông tin người nhận :</p> <p style="text-align: left;margin-bottom: 8px;color: currentColor;margin-top: 6px;"> Tên : <b>${name_buyer}</b></p> <p style="text-align: left;margin-bottom: 8px;color: currentColor;margin-top: 6px;"> Địa chỉ : <b>${address_1}</b></p> <p style="text-align: left;margin-bottom: 8px;color: currentColor;margin-top: 6px;"> Số điện thoại : <b>${phone}</b></p> <p style="text-align: left;margin-bottom: 8px;color: currentColor;margin-top: 6px;"> Ghi chú : <b>${note}</b></p></div>
+                    </div>
+                    <div class="footer-pp"><a id="backz" href="${home_url}">
+                            <p class="bnt-home"
+                                style=" margin: auto; width: 162px; padding: 14px; border: 1px solid green; border-radius: 10px; font-size: 15px; font-weight: 600; color: green; ">
+                                Quay lại trang chủ</p>
+                        </a></div>
+                </div>
+            </div>
+        </div>
+    </div>`;
+    console.log("🚀 ~ file: checkout.js:183 ~ render_result ~ total_price:", total_price)
+
+    }
+
+    document.getElementById("rs").innerHTML = html;
 }

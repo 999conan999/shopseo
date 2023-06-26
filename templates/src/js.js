@@ -107,8 +107,10 @@ function show_cart(){
     document.getElementById("popup-cart").style.backgroundColor = "rgba(0, 0, 0, 0.55)";
     render_cart_pp();
     setTimeout(()=>{
+        try{
         document.getElementById("pp-content").style.right = "0px";
         document.getElementById("wrap-tt").style.right = "0px";
+        }catch(e){}
     },10)
 
 }
@@ -119,7 +121,9 @@ function hiden_cartpp(){
     }catch(e){}
     document.getElementById("popup-cart").style.backgroundColor = "transparent";
     setTimeout(()=>{
+        try{
         document.getElementById("popup-cart").style.display = "none";
+        }catch(e){}
     },300)
 }
 function update_count_cart(){

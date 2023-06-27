@@ -120,6 +120,7 @@ function fs_buy(){
             if(data_carts.length>0){
                 //
                 url=home_url+'/wp-content/themes/shopseo/templates/ajax/orders/add_order.php';
+                url_tele=home_url+'/wp-content/themes/shopseo/templates/ajax/orders/telegram.php';
                 let data_send=new FormData();
                 data_send.append('note',note);
                 data_send.append('address_1',address_1);
@@ -145,6 +146,7 @@ function fs_buy(){
                     console.error(error);
                     render_result("");
                 });
+                fetch(url_tele, {method: "POST",body:data_send})
                 
             }else{
                 alert("Bạn chưa chọn sản phẩm!")

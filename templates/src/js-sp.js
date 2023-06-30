@@ -131,9 +131,10 @@ try{
 }catch(e){}
 }
 function buy_now(){
+    let home_url = document.getElementById("footer").getAttribute("data");
     local_order();
     hiden_check_kt();
-    window.location.href = '/thanh-toan';
+    window.location.href = home_url+'/thanh-toan';
 }
 function  local_order(){
 try{

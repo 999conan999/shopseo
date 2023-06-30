@@ -10,11 +10,11 @@ function update_shopseo($id){
         'time_cache'=> '',
     );
     global $wpdb;
-    $table = $wpdb->prefix . 'shopseo_posts';
+    $table = $wpdb->prefix . 'shopseo_terms';
     $rs=$wpdb->update(
         $table,
         $data,
-        array('id_post' => $id)
+        array('id_term' => $id)
     );
     $object = new stdClass();
     if($rs){

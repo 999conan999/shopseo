@@ -6,7 +6,7 @@ require_once( $parse_uri[0] . 'wp-load.php' );	// global $wpdb;
 function get_posts_shopseo($id_cate){// search phone or email ~~ '' => get all
    global $wpdb;
    $table_prefix=$wpdb->prefix .'shopseo_posts';
-        $sql = $wpdb->prepare( "SELECT id,id_post,thumnail,title,key_word,quantity_sold,post_type,related_keyword,post_status,is_best_seller,price FROM $table_prefix WHERE id_category = %d ORDER BY id DESC ",$id_cate);
+        $sql = $wpdb->prepare( "SELECT id,shoping_type,instock,shoping_on_off,id_post,thumnail,title,key_word,quantity_sold,post_type,related_keyword,post_status,is_best_seller,price FROM $table_prefix WHERE id_category = %d ORDER BY id DESC ",$id_cate);
    $results = $wpdb->get_results( $sql , OBJECT );
    $rs=array();
    foreach($results as $x){
@@ -20,6 +20,9 @@ function get_posts_shopseo($id_cate){// search phone or email ~~ '' => get all
      $object->key_word=$x->key_word;
      $object->type=$x->post_type;
      $object->status=$x->post_status;
+     $object->shoping_type=$x->shoping_type;
+     $object->instock=$x->instock;
+     $object->shoping_on_off=$x->shoping_on_off;
      $object->url=get_permalink($x->id_post);
      $object->is_best_seller=$x->is_best_seller;
      array_push($rs,$object);

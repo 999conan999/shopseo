@@ -47,6 +47,55 @@ if (!function_exists('send')) {
 if(is_user_logged_in()){
     add_action('after_switch_theme', 'my_theme_activation_hook');
 }
+function render_xml_first(){
+    $Path_name_xml=ABSPATH.'wp-content/themes/shopseo/templates/ajax/xml/products.xml';
+    global $wpdb;
+    $table_prefix=$wpdb->prefix .'shopseo_posts';
+    $sql = $wpdb->prepare( "SELECT id_post,title,short_des,price,thumnail,shoping_type,instock,id_category FROM $table_prefix WHERE shoping_on_off = 'on' AND post_status = 'publish' ORDER BY id_category DESC ");
+    $results = $wpdb->get_results( $sql , OBJECT );
+    if(count($results)>0){
+      $home_url=get_home_url();
+      $home_name=str_replace('https://', '', $home_url);
+      $home_name=str_replace('http://', '', $home_name);
+      $rs=array();
+      foreach($results as $x){
+          $values = [];
+          $values['id'] = $x->id_post;
+          $values['title'] = $x->title;
+          $values['description'] =  $x->short_des;
+          $values['link'] = get_permalink($x->id_post);
+          $values['condition'] = "Mới";
+          $values['availability'] = $x->instock=="true"?"in_stock":"out_of_stock";
+              $price= str_replace(' ', '', $x->price);
+          $values['price'] = $price." VND";
+              $cat = get_category($x->id_category);
+              $name_brand=$cat->name." ".$home_name;
+          $values['brand'] = $name_brand;
+          $values['gtin'] = "";
+          $values['mpn'] = "";
+              $thumnail=json_decode($x->thumnail);
+          $values['image_link'] = $thumnail->url;
+          $values['google_product_category'] = "";
+          $values['custom_label_0'] = $x->shoping_type;
+          array_push($rs,$values);
+      }
+      if(count($rs)>0){
+          global $Path_name_xml;
+          $xml = new SimpleXMLElement('<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0"></rss>');
+          $channel = $xml->addChild('channel');
+          // Tạo một namespace
+          $gNamespace = 'http://base.google.com/ns/1.0';
+          foreach($rs as $updatedFields){
+              $item = $xml->channel->addChild('item');
+              foreach ($updatedFields as $fieldName => $fieldValue) {
+                  $item->addChild('g:'.$fieldName, $fieldValue, $gNamespace);
+              }
+          }
+          // Lưu file XML
+          $xml->asXML($Path_name_xml);
+      }
+    }
+}
 
 function my_theme_activation_hook() {
     global $wpdb;
@@ -96,6 +145,9 @@ function my_theme_activation_hook() {
             json_data longtext NULL,
             data_cache longtext NOT NULL,
             time_cache text NOT NULL,
+            shoping_type varchar(200) NOT NULL,
+            instock varchar(10) NOT NULL,
+            shoping_on_off varchar(10) NOT NULL,
             PRIMARY KEY (id),
             FOREIGN KEY (id_post) REFERENCES {$table_parent}(ID) ON DELETE CASCADE
         ) {$charset_collate};";
@@ -191,288 +243,11 @@ function my_theme_activation_hook() {
         // Thực hiện tạo bảng
         dbDelta($sql);
     }
+    // render xml shoping first
+    render_xml_first();
 
 }
 
 
-
-
-// // HOME
-// function get_posts_star_by_category_id_Home($id){
-//     $args = array('cat' => $id,'meta_key' => 'star','meta_value' => 'true', 'post_status' => 'publish', 'orderby' => 'post_date', 'order' =>'DESC', 'posts_per_page' =>8,'offset' => 0);
-//     $results =query_posts($args);
-//     $rsx=array();    
-//     foreach($results as $x){
-//         $object = new stdClass();
-//         $object->id=$x->ID;
-//         $object->title=$x->post_title;
-//         $object->link=get_permalink($x->ID);
-//         $metaA=get_post_meta($x->ID,'metaA', true);
-//         $data_metaA=json_decode($metaA);
-//         $object->img=$data_metaA->thumnail;
-//         $object->rate=$data_metaA->rating;
-//         $object->price_ins=$data_metaA->price;
-//         $object->price_del='';
-//         $object->message=$data_metaA->message==NULL?'':$data_metaA->message;
-//         array_push($rsx,$object);
-//     }
-//     return $rsx;
-// }
-// function get_list_posts_by_categorys_Home(){
-//     global $wpdb;
-//     $table_prefix=$wpdb->prefix .'term_taxonomy';
-//     $sql = $wpdb->prepare( "SELECT term_id,parent FROM $table_prefix WHERE taxonomy ='category' ORDER BY term_id DESC");
-//     $results = $wpdb->get_results( $sql , OBJECT );
-//     $categorys=array();
-//     $id_default_category= get_option('default_category');
-//     foreach($results as $x){
-//         $id=$x->term_id;
-//         if($id!=20&&$id!=21){
-//             if($id_default_category!=$id){
-//                 // echo get_cat_name($id);
-//                 $obj= new stdClass();
-//                 $obj->title=get_cat_name($id);
-//                 $obj->link=get_category_link($id);
-//                 $obj->sp= get_posts_star_by_category_id_Home($id);
-//                 array_push($categorys,$obj);
-//             }
-//         }
-//     }
-//     return($categorys);
-  
-// }
-// // get_list_posts_by_categorys_Home();
-// function get_news_Home($quantity){
-//     global $wpdb;
-//     $table_prefix=$wpdb->prefix .'posts';
-//     $sql = $wpdb->prepare( "SELECT ID,post_title FROM $table_prefix WHERE post_type ='post' AND  post_status='publish' ORDER BY post_date DESC LIMIT %d OFFSET 0 ",$quantity );
-//     $results = $wpdb->get_results( $sql , OBJECT );
-//     $list_news=array();
-//     foreach($results as $x){
-//         $object = new stdClass();
-//         $object->title=$x->post_title;
-//         $metaA=get_post_meta($x->ID,'metaA', true);
-//         $data_metaA=json_decode($metaA);
-//         $object->img=isset($data_metaA->thumnail)?$data_metaA->thumnail:"";
-//         $object->link=get_permalink($x->ID);
-//         array_push($list_news,$object);
-//     }
-//     return($list_news); 
-// }
-// // get_news_Home(9);
-// function get_common(){
-//     $common=get_option('setup_meme_theme');
-//     if($common){
-//         $rs= json_decode(stripslashes($common));
-//         return $rs;
-//     }else{
-//         return false;
-//     }
-// }
-// function get_menu($type){
-//     if($type=='is_on_menu'){
-//         global $wpdb;
-//         $table_prefix=$wpdb->prefix .'term_taxonomy';
-//         $sql = $wpdb->prepare( "SELECT term_id FROM $table_prefix WHERE taxonomy ='category' AND description = '1' ORDER BY term_id ASC");
-//         $results = $wpdb->get_results( $sql , OBJECT );
-//         $rs=array();
-//         foreach($results as $x){
-//             $id=$x->term_id;
-//             $cat = get_category( $id );
-//             $obj= new stdClass();
-//             $obj->title=$cat->name;
-//             $obj->link=get_category_link($id);
-//             array_push($rs,$obj);
-//         }
-//         return($rs);
-//     }
-// }
-// if (!function_exists('create_qc_img_table')) {
-//     function create_qc_img_table(){
-//         global $wpdb;
-//         $name_table=$wpdb->prefix .'qc_img';
-//         $charsetCollate = $wpdb->get_charset_collate();
-//         $createTable = "CREATE TABLE IF NOT EXISTS `{$name_table}` (
-//             `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-//             `alt` varchar(200) NULL,
-//             `url` varchar(200) NULL,
-//             `date_create` timestamp NOT NULL,
-//             PRIMARY KEY (`id`)
-//         ) {$charsetCollate};";
-//         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-//         dbDelta( $createTable );
-//     }
-// }
-// add_action("after_switch_theme", "mytheme_do_something");
-// function wp_register_theme_activation_hook($code, $function) {
-//     create_qc_img_table();
-// }
-// //  get_common();
  
-// /////////////////////////////////////////////
-// function get_category_infor($id){
- 
-//     // get infor posst : ID, post_Date, title, content, *url post, status, meta-all
-//     $cat = get_category( $id);
-//     //contents
-//     $contents = new stdClass();
-//     $contents->title=$cat->name;
-//     $contents->price_del='';
-//     $metaA=get_term_meta($id,'metaA', true);
-//     $data_metaA=json_decode($metaA["metaA"]);
-//     $contents->price_ins=$data_metaA->price;
-//     $contents->short_des=$data_metaA->short_des;
-//     $contents->long_des=$data_metaA->long_des;
-//     $contents->note='';
-//     // data phu
-//     $phu = new stdClass();
-//     $phu->thumnail=$data_metaA->thumnail;
-//     $phu->slide_sort=$data_metaA->slide_sort;
-//     $phu->show_slide=true;
-//     $phu->rating='5';
-//     //category
-//     // $c=(wp_get_post_categories($id))[0];
-//     $phu->category_name=$cat->name;
-//     $phu->category_link=get_category_link($id);
-//     //related_posts
-//     $args = array('cat' => $id, 'post_status' => 'any', 'orderby' => 'post_date', 'order' =>'DESC', 'posts_per_page' => 50,'offset' => 0 );
-//     $results =query_posts($args);
-//     $related_posts=array();    
-//     foreach($results as $x){
-//         $object = new stdClass();
-//         $object->title=$x->post_title;
-//         $object->link=get_permalink($x->ID);
-//         array_push($related_posts,$object);
-//     }
-//     // cart_sp
-//     $cart_sp=$data_metaA->cart_sp;  
-  
-//     //rs
-//     $rs = new stdClass();
-//     $rs->contents=$contents;
-//     $rs->phu=$phu;
-//     $rs->related_posts=$related_posts;
-//     $rs->cart_sp=$cart_sp;
-//     return($rs);
-
-// }
-// //
-// // Category_ Post _ product
-// function get_post_infor($id){
-//     global $wpdb;
-//     // get infor posst : ID, post_Date, title, content, *url post, status, meta-all
-//     $table_prefix=$wpdb->prefix .'posts';
-//     $sql = $wpdb->prepare( "SELECT ID,post_content,post_title FROM $table_prefix WHERE ID= %s ",$id);
-//     $results = $wpdb->get_results( $sql , OBJECT );
-//     $x=$results[0];
-//     //contents
-//     $contents = new stdClass();
-//     $contents->title=$x->post_title;
-//     $contents->price_del='';
-//     $metaA=get_post_meta($id,'metaA', true);
-//     $data_metaA=json_decode($metaA);
-//     // var_dump($data_metaA);
-//     $contents->price_ins=$data_metaA->price;
-//     $contents->short_des=$data_metaA->short_des;
-//     $contents->long_des=$x->post_content;
-//     $contents->note=$data_metaA->message==NULL?'':$data_metaA->message;
-//     // data phu
-//     $phu = new stdClass();
-//     $phu->thumnail=$data_metaA->thumnail;
-//     $phu->slide_sort=$data_metaA->slide_sort;
-//     $phu->show_slide=$data_metaA->show_slide;
-//     $phu->rating=$data_metaA->rating;
-//     //category
-//     $c=(wp_get_post_categories($id))[0];
-//     $phu->category_name=get_cat_name($c);
-//     $phu->category_link=get_category_link($c);;
-//     //related_posts
-//     $args = array('cat' => $c, 'post_status' => 'any', 'orderby' => 'post_date', 'order' =>'DESC', 'posts_per_page' => 25,'offset' => 0 );
-//     $results =query_posts($args);
-//     $related_posts=array();    
-//     foreach($results as $x){
-//         $object = new stdClass();
-//         $object->title=$x->post_title;
-//         $object->link=get_permalink($x->ID);
-//         array_push($related_posts,$object);
-//     }
-//     // cart_sp
-//     $cart_sp=array();  
-//     $metaA=get_term_meta($c,'metaA', true);
-
-//     if($metaA!=''){
-//         $data_metaA=json_decode($metaA["metaA"]);
-//         $cart_sp=$data_metaA->cart_sp;
-//     } 
-//     //rs
-//     $rs = new stdClass();
-//     $rs->contents=$contents;
-//     $rs->phu=$phu;
-//     $rs->related_posts=$related_posts;
-//     $rs->cart_sp=$cart_sp;
-//     return($rs);
-
-// }
-// //
-// function get_page_infor($id){
-//     global $wpdb;
-//     // get infor posst : ID, post_Date, title, content, *url post, status, meta-all
-//     $table_prefix=$wpdb->prefix .'posts';
-//     $sql = $wpdb->prepare( "SELECT ID,post_content,post_title FROM $table_prefix WHERE ID= %s ",$id);
-//     $results = $wpdb->get_results( $sql , OBJECT );
-//     $x=$results[0];
-//     //contents
-//     $contents = new stdClass();
-//     $contents->title=$x->post_title;
-//     $contents->price_del='';
-//     $metaA=get_post_meta($id,'metaA', true);
-//     $data_metaA=json_decode($metaA);
-//     $contents->price_ins='';
-//     $contents->short_des=$data_metaA->short_des;
-//     $contents->long_des=$x->post_content;
-//     $contents->note='';
-//     // data phu
-//     $phu = new stdClass();
-//     $phu->thumnail=$data_metaA->thumnail;
-//     $phu->slide_sort=array();
-//     $phu->show_slide=false;
-//     $phu->rating='5';
-//     //category
-//     $phu->category_name='';
-//     $phu->category_link='';
-//     //rs
-//     $rs = new stdClass();
-//     $rs->contents=$contents;
-//     $rs->phu=$phu;
-//     $rs->related_posts=array();
-//     $rs->cart_sp=array();
-//     return($rs);
-
-// }
-// // send(get_page_infor(61));
-// // search
-// function get_data_search($key){
-//     global $wpdb;
-//     $table_prefix=$wpdb->prefix .'posts';
-//     $sql = $wpdb->prepare( "SELECT ID,post_title FROM $table_prefix WHERE post_type ='post' AND  post_status ='publish' AND post_title LIKE %s ORDER BY post_date DESC LIMIT 20 OFFSET 0 ",'%'.$key.'%');
-//     $results = $wpdb->get_results( $sql , OBJECT );
-//     $rs=array();
-//     foreach($results as $x){
-//         $object = new stdClass();
-//         $object->id=$x->ID;
-//         $object->title=$x->post_title;
-//         $object->link=get_permalink($x->ID);
-//         $metaA=get_post_meta($x->ID,'metaA', true);
-//         $data_metaA=json_decode($metaA);
-//         $object->img=$data_metaA->thumnail;
-//         $object->rate=$data_metaA->rating;
-//         $object->price_ins=$data_metaA->price;
-//         $object->price_del='';
-//         $object->message=$data_metaA->message==NULL?'':$data_metaA->message;
-//         array_push($rs,$object);
-//     }
-//     return($rs);
-// }
-// // get_data_search('Tiêu');
-
 ?>

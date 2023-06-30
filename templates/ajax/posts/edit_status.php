@@ -1,7 +1,7 @@
 <?php
 $parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
 require_once( $parse_uri[0] . 'wp-load.php' );	// global $wpdb;
-
+require_once(get_stylesheet_directory().'/templates/ajax/xml/main.php');
  
 function update_shopseo($id,$value){
     $my_post = array(
@@ -33,6 +33,7 @@ function update_shopseo($id,$value){
     );
     $object = new stdClass();
     if($rs){
+        main($id);
         $object->status=true;
     }else{
         $object->status=false;

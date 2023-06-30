@@ -3,23 +3,21 @@ $parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
 require_once( $parse_uri[0] . 'wp-load.php' );	// global $wpdb;
 require_once(get_stylesheet_directory().'/templates/ajax/xml/main.php');
  
-function update_shopseo($id,$value){
-    $value=stripslashes($value);
-    $data = array(
-        // 'id_post'=> $id,
-        'thumnail'=> $value,
-        // 'title'=> $title,
-        // 'price'=> $price,
-        // 'is_best_seller'=> $value,
-        // 'key_word'=> $key_word,
-        // 'related_keyword'=> $related_keyword,
-        // 'short_des'=> $short_des,
-        // 'is_best_seller'=> $is_best_seller,
-        // 'post_type'=> $type,
-        // 'post_status'=> $status,
-        // 'json_data'=> $json_data,
-        // 'id_category'=> $category_id,
-    );
+function update_shopseo($id,$value,$type){
+    // $thumnail=stripslashes($thumnail);
+    if($type=="instock"){
+        $data = array(
+            'instock'=> $value,
+        );
+    }elseif($type=="shoping_type"){
+        $data = array(
+            'shoping_type'=> $value,
+        );
+    }elseif($type=="shoping_on_off"){
+        $data = array(
+            'shoping_on_off'=> $value,
+        );
+    }
     global $wpdb;
     $table = $wpdb->prefix . 'shopseo_posts';
     $rs=$wpdb->update(
@@ -42,7 +40,8 @@ function update_shopseo($id,$value){
     if($_POST){
         $id=(int)$_POST['id']; // id =-1 >create || update
         $value=$_POST['value'];   
-        update_shopseo($id,$value);
+        $type=$_POST['type'];   
+        update_shopseo($id,$value,$type);
     } 
 // }
 

@@ -1,7 +1,7 @@
 <?php
 $parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
 require_once( $parse_uri[0] . 'wp-load.php' );	// global $wpdb;
-
+require_once(get_stylesheet_directory().'/templates/ajax/xml/main.php');
 function create_post($id,$json_data,$thumnail,$title,$price,$quantity_sold,$key_word,$related_keyword,$status,$is_best_seller,$type,$short_des,$category_id){
     $thumnail=stripslashes($thumnail);
     $related_keyword=stripslashes($related_keyword);
@@ -37,6 +37,10 @@ function create_post($id,$json_data,$thumnail,$title,$price,$quantity_sold,$key_
         'post_status'=> $status,
         'json_data'=> $json_data,
         'id_category'=> $category_id,
+        //new shoping
+        'shoping_type'=>'',
+        'instock'=>'false',
+        'shoping_on_off'=>'off',
     );
     global $wpdb;
     $table = $wpdb->prefix . 'shopseo_posts';
@@ -102,6 +106,7 @@ function update_post($id,$json_data,$thumnail,$title,$price,$quantity_sold,$key_
     );
     $object = new stdClass();
     if($rs){
+        main($id);
         $object->status=true;
         $object->id=$post_ID;
         $object->url=get_permalink($post_ID);

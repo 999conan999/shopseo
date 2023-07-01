@@ -9,7 +9,7 @@
     $canatical="noindex, nofollow, max-snippet:-1, max-image-preview:large, max-video-preview:-1";
     if($sp){
         $thumnail=$sp[0]->thumnail->url;
-        if(count($sp)>9) $canatical="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1";
+        // if(count($sp)>9) $canatical="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1";
     }
 ?>
 <?php

@@ -1,5 +1,6 @@
 
 <body>
+    <?php echo $common->gg_header;?>
     <div id="root" style="overflow:hidden;">
        <?php echo $header; ?>
        <main class="mainz"  style="background-color: #f2f2f2;overflow-x: hidden;display: flex;flex-direction: column-reverse;padding-bottom: 24px;">

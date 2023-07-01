@@ -146,9 +146,11 @@ function get_post_infor($id){
         if($results!=false){
             $json_data->notify=json_decode($results);
         }
-    }
+    };
+    // get id comment
+    $comment_id=$json_data->comments_id==-1?$id:$json_data->comments_id;
     // get comments
-    $comments=get_comments_shopseo($id,0);
+    $comments=get_comments_shopseo($comment_id,0);
     $json_data->comments=$comments;
     return $json_data;
 }

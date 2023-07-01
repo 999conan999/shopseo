@@ -1898,6 +1898,7 @@ h3.title-h3-2 {
     -webkit-line-clamp: 2;
     font-size: 11px;
     color: #858b8b;
+    padding-left: 5px;
 }
 @media (min-width: 768px){
     .ulz a{

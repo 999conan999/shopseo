@@ -8,6 +8,30 @@ function get_common(){
         return new stdClass();
     }
 }
+function get_404_cate(){
+    global $wpdb;
+    $table_prefix=$wpdb->prefix .'shopseo_terms';
+    $sql = $wpdb->prepare( "SELECT id_term,thumnail,title FROM $table_prefix ORDER BY id_term DESC");
+    $results = $wpdb->get_results( $sql , OBJECT );
+    $arr=array();
+    $i=0;
+    $html_xu_huong='';
+    foreach($results as $x){
+        $i++;
+        if($i<11){
+            $url=get_category_link($x->id_term);
+            $thumnail=json_decode($x->thumnail);
+            $html_xu_huong.=' <div class="col-6 col-md-3 col-xl-2"><a class="refz" href="'.$url.'" title="'.$x->title.'"><img src="'.$thumnail->url150.'" width="64px" height="64px"><p>'.$x->title.'</p></a></div>';
+            $obj= new stdClass();
+            $obj->name=$x->title;
+            $obj->url=$url;
+            $obj->sp_html=get_sp_card($x->id_term,12,false);
+            array_push($arr,$obj);
+        }
+        // 
+    }
+    return $html_xu_huong;
+}
 function get_home_infor($id){
     global $wpdb;
     $table_prefix=$wpdb->prefix .'shopseo_posts';
@@ -293,5 +317,26 @@ function get_new_post($sl){
         $html.='<li class="bv-cart col-6 col-md-4 col-xl-3 "><a class="a-bv" href="'.get_permalink($x->id_post).'" title="'.$x->title.'" target="_blank" ><img src="'.$thumnail->url150.'" width="80px" height="80px"><p style=" font-size: 12px;margin-bottom: 3px; ">'.$x->title.'</p></a></li>';
     }
     return $html;
+}
+//
+function get_data_search($search_text){
+    global $wpdb;
+    $table_prefix=$wpdb->prefix .'shopseo_posts';
+         $sql = $wpdb->prepare( "SELECT id_post,thumnail,title,short_des FROM $table_prefix WHERE  title LIKE %s ORDER BY id DESC LIMIT %d OFFSET %d ",'%'.$search_text.'%',10,0);
+    $results = $wpdb->get_results( $sql , OBJECT );
+    $rs=array();
+    foreach($results as $x){
+      $object = new stdClass();
+      $object->thumnail=json_decode($x->thumnail);
+      $object->title=$x->title;
+      $object->short_des=$x->short_des;
+      $object->url=get_permalink($x->id_post);
+      array_push($rs,$object);
+    }
+    if(count($rs)>0){
+        return $rs;
+    }else{
+        return false;
+    }
 }
 ?>

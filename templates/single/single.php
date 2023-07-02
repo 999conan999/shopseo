@@ -26,7 +26,7 @@
         $head.='<meta name="viewport" content="width=device-width, initial-scale=1">';
         $head.='<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">';
         $head.='<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">';
-        $head.='<title>'.$post_infor->title.' | '.$home_name.' </title>';
+        $head.='<title>'.$post_infor->title.' | '.$home_name.'</title>';
         $head.='<meta name="description" content="'.$post_infor->short_des.'">';
         $head.='<link rel="canonical" href="'.$current_url.'">';
         $head.='<meta property="og:locale" content="vi_VN">';

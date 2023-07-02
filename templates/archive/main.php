@@ -18,7 +18,7 @@
                 <div class="row category-mn">
                     <?php foreach($data->related_list as $x){ ?>
                     <div class="col-6 col-md-3 col-xl-2">
-                        <a class="refz" href="<?php echo $x->url; ?>" title="<?php echo $x->name; ?>">
+                        <a class="refz" href="<?php echo $x->url; ?>" title="<?php echo $x->name; ?>" target="_blank">
                             <img src="<?php echo $x->thumnail; ?>" width="64px" height="64px">
                             <p><?php echo $x->name; ?></p>
                         </a>

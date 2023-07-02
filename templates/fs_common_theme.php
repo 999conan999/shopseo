@@ -303,7 +303,7 @@ function get_sp_card($id,$sl=12,$is_best_saller=false){
         foreach($results as $x){
           $thumnail = json_decode($x->thumnail);
           $price_ins=(int)$x->price;
-            $html.='<li class="lza col-6 col-md-3 col-xl-2 lza-home"><a class="card-3 card-3-home" href="'.get_permalink($x->id_post).'" title="'.$x->title.'" target="_blank" ><div class="imgz-cart danhdev-product"><img class="zz lazyload" data-src="'.$thumnail->url300.'" src="'.$thumnail->url.'"></div><p style=" font-size: 12px;margin-bottom: 3px; ">'.$x->title.'</p><div style=" padding-left: 8px;padding-bottom: 10px; "><ins style=" font-size: 14px; " class="ins-cost costz">'.number_format($price_ins, 0, ".", ".").' đ</ins></div><div class="rating" style=" position: absolute; right: 0px; bottom: -3px; "><span class="star" style=" font-size: 12px; ">Đã bán: <b>'.$x->quantity_sold.'</b></span></div></a></li>';
+            $html.='<li class="lza col-6 col-md-3 col-xl-2 lza-home"><a class="card-3 card-3-home" href="'.get_permalink($x->id_post).'" title="'.$x->title.'" ><div class="imgz-cart danhdev-product"><img class="zz lazyload" data-src="'.$thumnail->url300.'" src="'.$thumnail->url.'"></div><p style=" font-size: 12px;margin-bottom: 3px; ">'.$x->title.'</p><div style=" padding-left: 8px;padding-bottom: 10px; "><ins style=" font-size: 14px; " class="ins-cost costz">'.number_format($price_ins, 0, ".", ".").' đ</ins></div><div class="rating" style=" position: absolute; right: 0px; bottom: -3px; "><span class="star" style=" font-size: 12px; ">Đã bán: <b>'.$x->quantity_sold.'</b></span></div></a></li>';
         }
         return $html;
 }
@@ -316,7 +316,7 @@ function get_new_post($sl){
     $html='';
     foreach($results as $x){
       $thumnail = json_decode($x->thumnail);
-        $html.='<li class="bv-cart col-6 col-md-4 col-xl-3 "><a class="a-bv" href="'.get_permalink($x->id_post).'" title="'.$x->title.'" target="_blank" ><img src="'.$thumnail->url150.'" width="80px" height="80px"><p style=" font-size: 12px;margin-bottom: 3px; ">'.$x->title.'</p></a></li>';
+        $html.='<li class="bv-cart col-6 col-md-4 col-xl-3 "><a class="a-bv" href="'.get_permalink($x->id_post).'" title="'.$x->title.'" ><img src="'.$thumnail->url150.'" width="80px" height="80px"><p style=" font-size: 12px;margin-bottom: 3px; ">'.$x->title.'</p></a></li>';
     }
     return $html;
 }

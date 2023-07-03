@@ -150,11 +150,11 @@ function get_post_infor($id){
     // get id comment
     $comment_id=$json_data->comments_id==-1?$id:$json_data->comments_id;
     // get comments
-    $comments=get_comments_shopseo($comment_id,0);
+    $comments=get_comments_shopseo($comment_id,0,$json_data->key_word);
     $json_data->comments=$comments;
     return $json_data;
 }
-function get_comments_shopseo($id_post,$page){//  
+function get_comments_shopseo($id_post,$page,$key_word=''){//  
     global $wpdb;
     $table_prefix=$wpdb->prefix .'shopseo_comments';
     $quantity=8;
@@ -175,7 +175,7 @@ function get_comments_shopseo($id_post,$page){//
     foreach($json_img as $img){
         $pos = strpos($img->url, '.gif');
         if($pos) $img->url300= $home_url.'/wp-content/themes/shopseo/templates/src/media/video-thumnail.jpg';
-         $html_img.='<div class="dev-3 pdr-3"> <img class="img-com lazyload" src="'.$img->url300.'" data-src="'.$img->url.'" width="100%"></div>';
+         $html_img.='<div class="dev-3 pdr-3"> <img class="img-com lazyload" alt="'.$x->rs_user_name.' nhận xét về '.$key_word.'" title="'.$x->rs_user_name.' nhận xét về '.$key_word.'" src="'.$img->url300.'" data-src="'.$img->url.'" width="100%"></div>';
     }
     $html.='<div class="w1"> <b>'.$x->rs_user_name.'</b> &nbsp;&nbsp;<span class="icon-cartx comx"></span> <i>Đã mua tại'.$home_name.'</i><p>'.$x->rs_comment.'</p>';
     if( $html_img!=''){

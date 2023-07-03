@@ -9,7 +9,7 @@ if(is_user_logged_in()){
     $wp_roles->add_cap( 'administrator', 'view_custom_menu' ); 
     $wp_roles->add_cap( 'subscriber', 'view_custom_menu' );
     function admin_show_theme_meme() {
-        add_menu_page( 'Main ', 'Main<style>.wp-menu-image>img{width: 26px; opacity: 1 !important; position: absolute; left: 10px; top: -7px;}</style>', 'view_custom_menu', 'giao-dien', 'theme_meme_init',get_home_url().'/wp-content/themes/theme_meme/build/gg.png',1 );
+        add_menu_page( 'Main ', 'Main<style>.wp-menu-image>img{width: 26px; opacity: 1 !important; position: absolute; left: 10px; top: -7px;}</style>', 'view_custom_menu', 'giao-dien', 'theme_meme_init',get_home_url().'/wp-content/themes/shopseo/build/gg.png',1 );
 
     }
 

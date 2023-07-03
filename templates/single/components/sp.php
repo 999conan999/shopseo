@@ -24,12 +24,12 @@
                             $pos = strpos($x->url, '.gif');
                             if($pos) $x->url300= $home_url.'/wp-content/themes/shopseo/templates/src/media/video-thumnail.jpg';
                             if($i==1){
-                                $small_img_html.='<div> <div class="item select"><a class="clear-e" href="'.$x->url.'" title="'.$post_infor->title." ".$i.'"><img src="'.$x->url300.'" alt="'.$post_infor->title." ".$i.'" title="'.$post_infor->title." ".$i.'" class="d-block w-100" /></a> </div> </div>';
+                                $small_img_html.='<div> <div class="item select"><a class="clear-e" href="'.$x->url.'" title="'.$post_infor->title." ".$i.'"><img src="'.$x->url300.'" alt="'.$post_infor->title.' '.$i.'" title="'.$post_infor->title.' '.$i.'" class="d-block w-100" /></a> </div> </div>';
                             }else{
-                                $small_img_html.='<div> <div class="item"><a class="clear-e" href="'.$x->url.'" title="'.$post_infor->title." ".$i.'"><img src="'.$x->url300.'" alt="'.$post_infor->title." ".$i.'" title="'.$post_infor->title." ".$i.'" class="d-block w-100" /></a> </div> </div>'; 
+                                $small_img_html.='<div> <div class="item"><a class="clear-e" href="'.$x->url.'" title="'.$post_infor->title." ".$i.'"><img src="'.$x->url300.'" alt="'.$post_infor->title." ".$i.'" title="'.$post_infor->title.' '.$i.'" class="d-block w-100" /></a> </div> </div>'; 
                             }
                     ?>
-                    <div class="item get-img imgz-cart"><img class="owl-lazy" data-src="<?php echo $x->url; ?>" src="<?php echo $x->url300; ?>" alt="<?php echo $post_infor->title." ".$i; ?>" />
+                    <div class="item get-img imgz-cart"><img class="owl-lazy" data-src="<?php echo $x->url; ?>" src="<?php echo $x->url300; ?>" alt="<?php echo $post_infor->title.' '.$i; ?>" />
                         <div class="w-btn-mua"><button class="btn-mua" onclick="set_kt('<?php echo $x->url; ?>')"><span class="icon-cartx"></span>Mua ngay!</button></div>
                     </div>
                     <?php }?>

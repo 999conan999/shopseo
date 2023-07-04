@@ -1521,6 +1521,10 @@ ul.cart-w.row {
         display: none;
     }
 }
+.dfer{
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+}
 #footer{
     margin-top: 25px; 
 }

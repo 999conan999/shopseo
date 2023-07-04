@@ -1526,6 +1526,7 @@ ul.cart-w.row {
 }
 .lis-category {
     margin-top: 8px;
+    padding: 6px;
 }
 .namo{
     font-weight: 400;
@@ -1837,6 +1838,7 @@ h3.title-h3-2 {
 }
 .header-cate-2{
     border-bottom: 3px solid #ed644c !important;
+    margin-left: -6px;
 }
 .icon-tt-1{
     position: absolute;

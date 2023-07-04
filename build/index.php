@@ -5,8 +5,8 @@
     <link async rel="stylesheet" href="<?php echo $home; ?>/wp-content/themes/shopseo/build/fontawesome/css/all.min.css" />
     <script defer="defer" src="<?php echo $home;?>/wp-content/themes/shopseo/build/tinymce/tinymce.min.js"></script>
 
-    <script defer="defer" src="<?php echo $home; ?>/wp-content/themes/shopseo/build/static/js/main.db5fe485.js"></script>
-    <link href="<?php echo $home; ?>/wp-content/themes/shopseo/build/static/css/main.042105d9.css" rel="stylesheet">
+    <script defer="defer" src="<?php echo $home; ?>/wp-content/themes/shopseo/build/static/js/main.8e2ef499.js"></script>
+    <link href="<?php echo $home; ?>/wp-content/themes/shopseo/build/static/css/main.8288c096.css" rel="stylesheet">
 
 
 </head>

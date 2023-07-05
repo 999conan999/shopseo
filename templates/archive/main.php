@@ -46,7 +46,23 @@
                                         if (isset($list_sp[$id_sp])) {
                                             $text_id.=','.$id_sp.',';
                                         $price_ins=(int)$list_sp[$id_sp]['price'];
-                                        echo '<li class="lza col-6 col-md-3 col-xl-2 lza-home"><a class="card-3 card-3-home" href="'.$list_sp[$id_sp]['url'].'" title="'.$list_sp[$id_sp]['title'].'" target="_blank"><div class="imgz-cart danhdev-product"><img class="zz lazyload" data-src="'.$list_sp[$id_sp]['thumnail']->url.'" src="'.$list_sp[$id_sp]['thumnail']->url300.'"></div><p style=" font-size: 12px;margin-bottom: 3px; ">'.$list_sp[$id_sp]['title'].'</p><div style=" padding-left: 8px;padding-bottom: 10px; "><ins style=" font-size: 14px; " class="ins-cost costz">'.number_format($price_ins, 0, ".", ".").' đ</ins></div><div class="rating" style=" position: absolute; right: 0px; bottom: -3px; "><span class="star" style=" font-size: 12px; ">Đã bán: <b>'.$list_sp[$id_sp]['quantity_sold'].'</b></span></div></a></li>';
+                                        if($x->is_template_large){
+// <div class="rating"><span class="xem-chi-tiet">>>Xem chi tiết</span><span class="star">Đã bán: <b>  echo $list_sp[$id_sp]['quantity_sold']; </b></span></div>
+?>
+<li class="lza col-12 col-md-4 col-xl-3"><a class="card-3" href="<?php echo $list_sp[$id_sp]['url']; ?>" title="<?php echo $list_sp[$id_sp]['title']; ?>" target="_blank">
+        <div class="imgz-cart danhdev-product"><img class="zz lazyload" data-src="<?php echo $list_sp[$id_sp]['thumnail']->url; ?>" src="<?php echo $list_sp[$id_sp]['thumnail']->url300; ?>"  width="100%"></div>
+        <h3><?php echo $list_sp[$id_sp]['title']; ?></h3>
+        <div style=" padding-left: 8px; "><ins class="ins-cost costz"><?php echo number_format($price_ins, 0, ".", ".");?> đ</ins></div><div class="rating">
+       <?php if((int)$list_sp[$id_sp]['quantity_sold']>0){ ?>                                     
+        <span class="star">Đã bán: <b><?php echo $list_sp[$id_sp]['quantity_sold']; ?></b></span>
+        <?php } ?>
+    </div>
+    </a>
+</li>
+<?php
+                                        }else{
+                                            echo '<li class="lza col-6 col-md-3 col-xl-2 lza-home"><a class="card-3 card-3-home" href="'.$list_sp[$id_sp]['url'].'" title="'.$list_sp[$id_sp]['title'].'" target="_blank"><div class="imgz-cart danhdev-product"><img class="zz lazyload" data-src="'.$list_sp[$id_sp]['thumnail']->url.'" src="'.$list_sp[$id_sp]['thumnail']->url300.'"></div><p style=" font-size: 12px;margin-bottom: 3px; ">'.$list_sp[$id_sp]['title'].'</p><div style=" padding-left: 8px;padding-bottom: 10px; "><ins style=" font-size: 14px; " class="ins-cost costz">'.number_format($price_ins, 0, ".", ".").' đ</ins></div><div class="rating" style=" position: absolute; right: 0px; bottom: -3px; "><span class="star" style=" font-size: 12px; ">Đã bán: <b>'.$list_sp[$id_sp]['quantity_sold'].'</b></span></div></a></li>';
+                                        }
                                 }} ?>
                                 </ul>
                             </div>

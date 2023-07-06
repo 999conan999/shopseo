@@ -97,7 +97,7 @@ function get_cate_infor($id){
     //
     global $wpdb;
     $table_prefix=$wpdb->prefix .'shopseo_posts';
-         $sql = $wpdb->prepare( "SELECT id_post,thumnail,title,price,quantity_sold FROM $table_prefix WHERE id_category = %d ORDER BY id DESC ",$id);
+         $sql = $wpdb->prepare( "SELECT id_post,thumnail,title,price,quantity_sold FROM $table_prefix WHERE id_category = %d AND post_status = 'publish' ORDER BY id DESC ",$id);
     $results = $wpdb->get_results( $sql , ARRAY_A );
     $list_sp=[];
     foreach($results as $x){

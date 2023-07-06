@@ -30,10 +30,10 @@ function get_posts_shopseo($id_cate){// search phone or email ~~ '' => get all
    send($rs);
 }
 
-// if(is_user_logged_in()){
+if(is_user_logged_in()){
      if(isset($_GET['id'])){
           $id_cate=(int)$_GET['id'];
           get_posts_shopseo($id_cate);
      }
-// }
+}
  ?>

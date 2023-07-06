@@ -224,6 +224,9 @@ try{
         var divElement = document.getElementById('long-des');
         var contentHeight = divElement.scrollHeight;
         document.getElementById("long-des").style.height = contentHeight+"px";
+        setTimeout(()=>{
+            document.getElementById("long-des").style.height = "auto";
+        },500)
         document.getElementById("see-more").style.height = "0px";
         document.getElementById("btn-more").innerHTML = "Thu gọn";
     }else{

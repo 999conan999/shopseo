@@ -14,10 +14,10 @@ function delete_attribute_by_id($id){
     send($object);
 }
 
-// if(is_user_logged_in()){
+if(is_user_logged_in()){
     if($_POST){
         $idN=(int)$_POST['id'];
         delete_attribute_by_id($idN);
     } 
-// }
+}
 ?>

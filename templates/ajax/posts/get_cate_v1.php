@@ -21,7 +21,7 @@ function get_all_categorys(){
     }
     send($rs);
 }
-// if(is_user_logged_in()){
+if(is_user_logged_in()){
     get_all_categorys();
-// }
+}
 ?>

@@ -54,11 +54,11 @@ function get_category_detail($id){
      // }
           // send($rs);
      }
- // if(is_user_logged_in()){
+ if(is_user_logged_in()){
      // if(isset($_GET['id'])){
           $id=(int)$_GET['id'];
           get_category_detail($id);
      // }
- // }
+ }
  
  ?>

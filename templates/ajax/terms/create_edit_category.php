@@ -102,7 +102,7 @@ function update_term($id,$title,$thumnail,$price_ss,$json_data,$related_links,$s
     send($object);
 }
 
-// if(is_user_logged_in()){
+if(is_user_logged_in()){
     if($_POST){
         $id=(int)$_POST['id']; // id =-1 >create || update
         $json_data=stripslashes($_POST['json_data']);     
@@ -122,7 +122,7 @@ function update_term($id,$title,$thumnail,$price_ss,$json_data,$related_links,$s
         $object = new stdClass();
         send($object);
     }
-// }
+}
 
 
 

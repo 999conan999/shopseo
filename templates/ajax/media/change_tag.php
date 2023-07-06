@@ -12,7 +12,7 @@
           );
     }
  
-    // if(is_user_logged_in()){
+    if(is_user_logged_in()){
         if($_POST){
             $id=(int)$_POST['id'];
             $tag=$_POST['tag'];
@@ -21,4 +21,4 @@
             $object->id=true;
             send($object);
         }
-    // }
+    }

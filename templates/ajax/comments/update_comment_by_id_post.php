@@ -31,7 +31,7 @@ function update_comment_shopseo($id,$json_img,$rs_comment,$rs_phone,$rs_rep,$rs_
 }
 
 
-// if(is_user_logged_in()){
+if(is_user_logged_in()){
     if($_POST){
         $id=(int)$_POST['id']; // id =-1 >create || update
         $json_img=$_POST['json_img'];   
@@ -42,7 +42,7 @@ function update_comment_shopseo($id,$json_img,$rs_comment,$rs_phone,$rs_rep,$rs_
         $rs_user_name=$_POST['rs_user_name'];   
         update_comment_shopseo($id,$json_img,$rs_comment,$rs_phone,$rs_rep,$rs_status,$rs_user_name);
     } 
-// }
+}
 
 
 

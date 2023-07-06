@@ -118,13 +118,13 @@
         }
         send($rs);
     }
-    // if(is_user_logged_in()){
+    if(is_user_logged_in()){
         if(count($_FILES)>0){
             $result=uploade_core($_FILES,$_POST['tag']);
         }else{
             send(array());
         }
-    // }
+    }
  
 
 

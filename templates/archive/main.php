@@ -31,9 +31,11 @@
                         <?php 
                             $list_sp=$data->list_sp;
                             $text_id='';
+                            $i=0;
                             foreach($data->dm as $x){
                                 if(count($x->sp_list_id)){
-                                $id_url=fixForUri($x->name);
+                                $i++;
+                                $id_url='id'.$i;
                         ?>
                         <div class="lis-category">
                             <div class="wraptt" onClick=navigator.clipboard.writeText("<?php echo $data->url.'#'.$id_url; ?>")>

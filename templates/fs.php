@@ -80,7 +80,11 @@ function render_xml_first(){
           array_push($rs,$values);
       }
       if(count($rs)>0){
-          global $Path_name_xml;
+          // Kiểm tra xem file tồn tại trước khi xóa
+            if (file_exists($Path_name_xml)) {
+                // Xóa file
+                unlink($Path_name_xml);
+            }
           $xml = new SimpleXMLElement('<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0"></rss>');
           $channel = $xml->addChild('channel');
           // Tạo một namespace

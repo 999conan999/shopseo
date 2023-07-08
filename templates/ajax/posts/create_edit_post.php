@@ -39,7 +39,7 @@ function create_post($id,$json_data,$thumnail,$title,$price,$quantity_sold,$key_
         'id_category'=> $category_id,
         //new shoping
         'shoping_type'=>'',
-        'instock'=>'false',
+        'instock'=>'true',
         'shoping_on_off'=>'off',
     );
     global $wpdb;

@@ -20,6 +20,7 @@ function create_attribute($id,$json_data,$thumnail,$title,$price,$price_ss,$tag)
     $object = new stdClass();
     if($rs){
         $object->status=true;
+        $object->id=$rs;
     }else{
         $object->status=false;
     }
@@ -45,6 +46,7 @@ function update_attribute($id,$json_data,$thumnail,$title,$price,$price_ss,$tag)
     $object = new stdClass();
     if($rs){
         $object->status=true;
+        $object->id=$id;
     }else{
         $object->status=false;
     }

@@ -38,7 +38,7 @@ function create_post($id,$json_data,$thumnail,$title,$price,$quantity_sold,$key_
         'json_data'=> $json_data,
         'id_category'=> $category_id,
         //new shoping
-        'shoping_type'=>'',
+        'shoping_type'=>'All',
         'instock'=>'true',
         'shoping_on_off'=>'off',
     );

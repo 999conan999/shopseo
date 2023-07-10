@@ -1166,15 +1166,16 @@ p {
     font-weight: 600;
     margin-top: 5px;
     padding: 0 8px;
-    height: 43px;
+    height: 42px;
     overflow: hidden;
     line-height: 22px;
-    font-size: 16px;
+    font-size: 14px;
     word-wrap: break-word;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    color: #736f6f;
 }
 .costz{
     margin-right: 10px;

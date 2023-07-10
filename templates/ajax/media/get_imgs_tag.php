@@ -4,7 +4,7 @@
     function get_imgs($quantity,$offset,$tag){
         global $wpdb;
         $table_prefix=$wpdb->prefix .'shopseo_imgs';
-             $sql = $wpdb->prepare( "SELECT id,url,url300,tag FROM $table_prefix WHERE tag like %s ORDER BY date_create DESC LIMIT %d OFFSET %d ",'%'.$tag.'%',$quantity,$offset);
+             $sql = $wpdb->prepare( "SELECT id,url,url300,url150,tag FROM $table_prefix WHERE tag like %s ORDER BY date_create DESC LIMIT %d OFFSET %d ",'%'.$tag.'%',$quantity,$offset);
         $results = $wpdb->get_results( $sql , OBJECT );
         $rs=array();
         $home=home_url();

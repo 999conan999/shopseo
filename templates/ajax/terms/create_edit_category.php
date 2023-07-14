@@ -87,6 +87,7 @@ function update_term($id,$title,$thumnail,$price_ss,$json_data,$related_links,$s
         $object = new stdClass();
 
         if($rs){
+            $cat = get_category( $id );
             $defaultCategoryId = get_option('default_category');
             if($defaultCategoryId==$id){
                 $object->defaultCategory=true;
@@ -95,6 +96,7 @@ function update_term($id,$title,$thumnail,$price_ss,$json_data,$related_links,$s
            }
             $object->status=true;
             $object->id=$id;
+            $object->title=$cat->name;
             $object->url=get_category_link($id);
         }else{
             $object->status=false;

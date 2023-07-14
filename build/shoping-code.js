@@ -1,21 +1,23 @@
 async function myFunction() {
-  const accessToken=await getAccessToken();
   var merchantId = '651114113';
   var feedId = '117213241'; // feedid=> https://developers.google.com/shopping-content/reference/rest/v2.1/datafeeds/list
   var xmlURL = "https://cofa.vn/wp-content/themes/shopseo/templates/ajax/xml/products.xml";
   var telegram_token="5213620215:AAEipChA-WvFisUDOK8vbRBk6b4GOIpq7ec";
   var telegram_id_chat="1497494659";
   //============================
+  const accessToken=await getAccessToken();
   var b=await readXML(xmlURL);
   var a=await fetchProductInfo(merchantId, accessToken)
   let status=fs_is_load_data_feed(a,b);
   if(status) reloadProductFeed(accessToken,merchantId,feedId);
   //================================
   let k=await countDisapprovedProducts(merchantId);
+  console.log(k)
   if(k.dis>0){
-    let message=`Có ${k.dis}/${k.sum} sản phẩm bị từ chối tại Shoping của cofa.vn`;
+    let message=`Có ${k.dis}/${k.sum} sản phẩm bị từ chối tại Shoping của cofa.vn
+${k.text_error}`;
     await sendTelegramMessage(telegram_token, telegram_id_chat, message)
-  }
+  } 
 }
 // //================================================
 function sendTelegramMessage(token, chatId, message) {
@@ -42,27 +44,54 @@ function sendTelegramMessage(token, chatId, message) {
 }
 //
 async function countDisapprovedProducts(merchantId) {
-  var productStatuses =await ShoppingContent.Productstatuses.list(merchantId);
+  var productStatuses = await ShoppingContent.Productstatuses.list(merchantId);
   var totalProducts = 0;
   var numberDisapprovedProducts = 0;
-
+  var text_error=`
+  `;
   if (productStatuses.resources) {
     for (var i = 0; i < productStatuses.resources.length; i++) {
       var product = productStatuses.resources[i];
       totalProducts += 1;
-      if (product.itemLevelIssues) {
-        numberDisapprovedProducts++;
+      if (product.itemLevelIssues) { 
+        if(product.itemLevelIssues[0].code!='low_image_quality'){
+         text_error+=`+* ${product.title} 👉⚠️ : "${product.itemLevelIssues[0].code}"
+`;
+         numberDisapprovedProducts++;
+        }
       }
     }
   } else {
     Logger.log('No products in account ' + merchantId);
   }
 
+  // Phân trang cho tất cả sản phẩm
+  var pageToken = productStatuses.nextPageToken;
+  while (pageToken) {
+    productStatuses = await ShoppingContent.Productstatuses.list(merchantId, { pageToken: pageToken });
+    if (productStatuses.resources) {
+      for (var i = 0; i < productStatuses.resources.length; i++) {
+        var product = productStatuses.resources[i];
+        totalProducts += 1;
+        if (product.itemLevelIssues) {
+          if(product.itemLevelIssues[0].code!='low_image_quality'){
+            text_error+=`+* ${product.title} 👉⚠️ : "${product.itemLevelIssues[0].code}"
+`;
+            numberDisapprovedProducts++;
+          }
+        }
+      }
+    }
+    pageToken = productStatuses.nextPageToken;
+  }
+
   return {
-    sum:totalProducts,
-    dis:numberDisapprovedProducts
+    sum: totalProducts,
+    dis: numberDisapprovedProducts,
+    text_error:text_error
   };
 }
+ 
 //================================================
 function fs_is_load_data_feed(a,b){
   if(a.length!=b.length){

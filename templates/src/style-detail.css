@@ -542,6 +542,7 @@ p.danh-price {
 .contacktsx {
     display: inline-block;
     padding: 5px 16px;
+    margin: 0px 8px;
     margin-bottom: 7px;
     background-color: #c4fdc7;
     border-radius: 13px;
@@ -568,7 +569,7 @@ p.danh-price {
     height: 18px;
     line-height: 1.55em;
     top: -6px;
-    right: -8px;
+    right: 7px;
     border: 2px solid #fff;
     position: absolute;
     text-align: center;

@@ -94,8 +94,8 @@ function update_term($id,$title,$thumnail,$price_ss,$json_data,$related_links,$s
                 $object->defaultCategory=false;
            }
             $object->status=true;
-            $object->id=$category_ID;
-            $object->url=get_category_link($category_ID);
+            $object->id=$id;
+            $object->url=get_category_link($id);
         }else{
             $object->status=false;
         }

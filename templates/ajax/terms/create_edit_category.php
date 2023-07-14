@@ -40,11 +40,11 @@ function create_term($id,$title,$thumnail,$price_ss,$json_data,$related_links,$s
 }
  
 function update_term($id,$title,$thumnail,$price_ss,$json_data,$related_links,$short_des,$omg){
-    $my_category= array(
-        'cat_name'    => $title,
-        'cat_ID'    => $id,
-    );
-    $category_ID=wp_insert_category($my_category);
+    // $my_category= array(
+    //     'cat_name'    => $title,
+    //     'cat_ID'    => $id,
+    // );
+    // $category_ID=wp_insert_category($my_category);
     
     if($omg=='true'){
         $data = array(

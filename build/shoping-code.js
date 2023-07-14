@@ -66,6 +66,9 @@ async function countDisapprovedProducts(merchantId) {
 //================================================
 function fs_is_load_data_feed(a,b){
   if(a.length!=b.length){
+    console.log('Merchant : ',a.length);
+    console.log('XML : ',b.length);
+    console.log("Chênh lệch độ dài!");
     return true;
   }
   let rs_a=false;
@@ -79,7 +82,48 @@ function fs_is_load_data_feed(a,b){
     });
     if(b_o_arr.length==1){
       let b_o=b_o_arr[0];
-      if(a_o.title!=b_o.title||a_o.description!=b_o.description||a_o.link!=b_o.link||a_o.brand!=b_o.brand||a_o.imageLink!=b_o.imageLink||a_o.customLabel0!=b_o.customLabel0||(Number(a_o.price.replace(' VND',''))!=Number(b_o.price.replace(' VND',''))) ||(a_o.availability.replace('_',' ')!=b_o.availability.replace('_',' ')) ){
+      if(a_o.title.replace(/\s/g, '')!=b_o.title.replace(/\s/g, '')||a_o.description.replace(/\s/g, '')!=b_o.description.replace(/\s/g, '')||a_o.link!=b_o.link||a_o.brand.replace(/\s/g, '')!=b_o.brand.replace(/\s/g, '')||a_o.imageLink!=b_o.imageLink||a_o.customLabel0.replace(/\s/g, '')!=b_o.customLabel0.replace(/\s/g, '')||(Number(a_o.price.replace(' VND',''))!=Number(b_o.price.replace(' VND',''))) ||(a_o.availability.replace('_',' ')!=b_o.availability.replace('_',' ')) ){
+        console.log("A");
+          if(a_o.title.replace(/\s/g, '')!=b_o.title.replace(/\s/g, '')){
+            console.log("title");
+            console.log('title_xml',a_o.title);
+            console.log('title_xml',b_o.title);
+          }
+          if(a_o.description.replace(/\s/g, '')!=b_o.description.replace(/\s/g, '')){
+            console.log("description");
+            console.log('description_xml',a_o.description);
+            console.log('description_xml',b_o.description);
+          }
+          if(a_o.link!=b_o.link){
+            console.log("link");
+            console.log('link_xml',a_o.link);
+            console.log('link_xml',b_o.link);
+          }
+          if(a_o.brand.replace(/\s/g, '')!=b_o.brand.replace(/\s/g, '')){
+            console.log("brand");
+            console.log('brand_xml',a_o.brand);
+            console.log('brand_xml',b_o.brand);
+          }
+          if(a_o.imageLink!=b_o.imageLink){
+            console.log("imageLink");
+            console.log('imageLink_xml',a_o.imageLink);
+            console.log('imageLink_xml',b_o.imageLink);
+          }
+          if(a_o.customLabel0.replace(/\s/g, '')!=b_o.customLabel0.replace(/\s/g, '')){
+            console.log("customLabel0");
+            console.log('customLabel0_xml',a_o.customLabel0);
+            console.log('customLabel0_xml',b_o.customLabel0);
+          }
+          if((Number(a_o.price.replace(' VND',''))!=Number(b_o.price.replace(' VND','')))){
+            console.log("price");
+            console.log('price_xml',Number(a_o.price.replace(' VND','')));
+            console.log('price_xml',Number(b_o.price.replace(' VND','')));
+          }
+          if((a_o.availability.replace('_',' ')!=b_o.availability.replace('_',' '))){
+            console.log("availability");
+            console.log('availability_xml',a_o.availability.replace('_',' '));
+            console.log('availability_xml',b_o.availability.replace('_',' '));
+          }
          rs_a=true;
       }
     }else{
@@ -90,13 +134,54 @@ function fs_is_load_data_feed(a,b){
   for(let i=0;i<b.length;i++){
     let id=b[i].id;
     let b_o=b[i];
-    let a_o_arr=b.filter(function(item) {
+    let a_o_arr=a.filter(function(item) {
       return item.id == id;
     });
     if(a_o_arr.length==1){
       let a_o=a_o_arr[0];
-      if(a_o.title!=b_o.title||a_o.description!=b_o.description||a_o.link!=b_o.link||a_o.brand!=b_o.brand||a_o.imageLink!=b_o.imageLink||a_o.customLabel0!=b_o.customLabel0||(Number(a_o.price.replace(' VND',''))!=Number(b_o.price.replace(' VND',''))) ||(a_o.availability.replace('_',' ')!=b_o.availability.replace('_',' ')) ){
-         rs_b=true;
+      if(a_o.title.replace(/\s/g, '')!=b_o.title.replace(/\s/g, '')||a_o.description.replace(/\s/g, '')!=b_o.description.replace(/\s/g, '')||a_o.link!=b_o.link||a_o.brand.replace(/\s/g, '')!=b_o.brand.replace(/\s/g, '')||a_o.imageLink!=b_o.imageLink||a_o.customLabel0.replace(/\s/g, '')!=b_o.customLabel0.replace(/\s/g, '')||(Number(a_o.price.replace(' VND',''))!=Number(b_o.price.replace(' VND',''))) ||(a_o.availability.replace('_',' ')!=b_o.availability.replace('_',' ')) ){
+        console.log("A");
+          if(a_o.title.replace(/\s/g, '')!=b_o.title.replace(/\s/g, '')){
+            console.log("title");
+            console.log('title_xml',a_o.title);
+            console.log('title_xml',b_o.title);
+          }
+          if(a_o.description.replace(/\s/g, '')!=b_o.description.replace(/\s/g, '')){
+            console.log("description");
+            console.log('description_xml',a_o.description);
+            console.log('description_xml',b_o.description);
+          }
+          if(a_o.link!=b_o.link){
+            console.log("link");
+            console.log('link_xml',a_o.link);
+            console.log('link_xml',b_o.link);
+          }
+          if(a_o.brand.replace(/\s/g, '')!=b_o.brand.replace(/\s/g, '')){
+            console.log("brand");
+            console.log('brand_xml',a_o.brand);
+            console.log('brand_xml',b_o.brand);
+          }
+          if(a_o.imageLink!=b_o.imageLink){
+            console.log("imageLink");
+            console.log('imageLink_xml',a_o.imageLink);
+            console.log('imageLink_xml',b_o.imageLink);
+          }
+          if(a_o.customLabel0.replace(/\s/g, '')!=b_o.customLabel0.replace(/\s/g, '')){
+            console.log("customLabel0");
+            console.log('customLabel0_xml',a_o.customLabel0);
+            console.log('customLabel0_xml',b_o.customLabel0);
+          }
+          if((Number(a_o.price.replace(' VND',''))!=Number(b_o.price.replace(' VND','')))){
+            console.log("price");
+            console.log('price_xml',Number(a_o.price.replace(' VND','')));
+            console.log('price_xml',Number(b_o.price.replace(' VND','')));
+          }
+          if((a_o.availability.replace('_',' ')!=b_o.availability.replace('_',' '))){
+            console.log("availability");
+            console.log('availability_xml',a_o.availability.replace('_',' '));
+            console.log('availability_xml',b_o.availability.replace('_',' '));
+          }
+         rs_a=true;
       }
     }else{
       rs_b=true;
@@ -149,43 +234,56 @@ function getChildText(parentElement, childName, namespace) {
 //=========================
 async function fetchProductInfo(merchantId, accessToken) {
   var productInfoArray = [];
+  var pageToken = ""; // Sử dụng để theo dõi trang kế tiếp
   
-  var apiUrl = `https://shoppingcontent.googleapis.com/content/v2.1/${merchantId}/products`;
-  var headers = {
-    'Authorization': 'Bearer ' + accessToken,
-    'Content-Type': 'application/json'
-  };
-  
-  var options = {
-    'method': 'get',
-    'headers': headers,
-    'muteHttpExceptions': true
-  };
-  
-  var response =await UrlFetchApp.fetch(apiUrl, options);
-  var responseData = JSON.parse(response.getContentText());
-  
-  if (responseData && responseData.resources) {
-    for (var i = 0; i < responseData.resources.length; i++) {
-      var product = responseData.resources[i];
-      var productInfo = {
-        id: product.offerId,
-        title: product.title,
-        description: product.description,
-        link: product.link,
-        condition: product.condition,
-        availability: product.availability,
-        price: product.price.value,
-        brand: product.brand,
-        imageLink: product.imageLink,
-        customLabel0: product.customLabel0
-      };
-      productInfoArray.push(productInfo);
+  do {
+    if(pageToken==""){
+      var apiUrl = `https://shoppingcontent.googleapis.com/content/v2.1/${merchantId}/products?maxResults=250`;
+    }else{
+      var apiUrl = `https://shoppingcontent.googleapis.com/content/v2.1/${merchantId}/products?maxResults=250&pageToken=${pageToken}`;
     }
-  }
+    var headers = {
+      'Authorization': 'Bearer ' + accessToken,
+      'Content-Type': 'application/json'
+    };
+
+    var params = {
+      'maxResults': 250, // Số lượng sản phẩm trên mỗi trang (giá trị tối đa là 250)
+      'pageToken': pageToken
+    };
+    
+    var options = {
+      'method': 'get',
+      'headers': headers,
+      'muteHttpExceptions': true,
+    };
+
+    var response = await UrlFetchApp.fetch(apiUrl, options);
+    var responseData = JSON.parse(response.getContentText());
+    if (responseData && responseData.resources) {
+      for (var i = 0; i < responseData.resources.length; i++) {
+        var product = responseData.resources[i];
+        var productInfo = {
+          id: product.offerId,
+          title: product.title,
+          description: product.description,
+          link: product.link,
+          condition: product.condition,
+          availability: product.availability,
+          price: product.price.value,
+          brand: product.brand,
+          imageLink: product.imageLink,
+          customLabel0: product.customLabel0
+        };
+        productInfoArray.push(productInfo);
+      }
+    }
+    pageToken = responseData.nextPageToken; // Lưu trang kế tiếp (nếu có) để gọi API tiếp theo
+  } while (pageToken);
   
   return productInfoArray;
 }
+
 //==================================await reloadProductFeed(accessToken,merchantId,feedId);
 async function reloadProductFeed(accessToken,merchantId,feedId) {
   var apiUrl=`https://shoppingcontent.googleapis.com/content/v2.1/${merchantId}/datafeeds/${feedId}/fetchNow`

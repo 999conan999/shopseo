@@ -539,6 +539,7 @@ p.danh-price {
     position: relative;
     text-align: center;
 }
+
 .contacktsx {
     display: inline-block;
     padding: 5px 16px;
@@ -622,4 +623,7 @@ span.xuhms.xu-huong {
 }
 .comx:before{
     color: #52b858 !important;
+}
+#khuyen-mai{
+    padding: 5px;
 }

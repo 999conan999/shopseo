@@ -52,6 +52,8 @@ function get_home_infor($id){
         foreach($results as $x){
             $i++;
             if($i<11){
+                $cat = get_category( $id );
+                $x->title=$cat->name;
                 $url=get_category_link($x->id_term);
                 $thumnail=json_decode($x->thumnail);
                 $html_xu_huong.=' <div class="col-6 col-md-3 col-xl-2"><a class="refz" href="'.$url.'" title="'.$x->title.'"><img src="'.$thumnail->url150.'" width="64px" height="64px"><p>'.$x->title.'</p></a></div>';

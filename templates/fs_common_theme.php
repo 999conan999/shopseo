@@ -52,7 +52,7 @@ function get_home_infor($id){
         foreach($results as $x){
             $i++;
             if($i<11){
-                $cat = get_category( $id );
+                $cat = get_category($x->id_term);
                 $x->title=$cat->name;
                 $url=get_category_link($x->id_term);
                 $thumnail=json_decode($x->thumnail);

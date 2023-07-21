@@ -35,8 +35,8 @@
                             <div class="lazy-video" data-src="<?php echo $x->url; ?>"></div>
                         <?php }else{?>
                             <img class="owl-lazy" data-src="<?php echo $x->url; ?>" src="<?php echo $x->url300; ?>" alt="<?php echo $post_infor->title.' '.$i; ?>" />
+                            <div class="w-btn-mua"><button class="btn-mua" onclick="set_kt('<?php echo $x->url; ?>')"><span class="icon-cartx"></span>Mua ngay!</button></div>
                         <?php }?>
-                        <div class="w-btn-mua"><button class="btn-mua" onclick="set_kt('<?php echo $x->url; ?>')"><span class="icon-cartx"></span>Mua ngay!</button></div>
                     </div>
                     <?php }?>
                 </div>

@@ -30,7 +30,7 @@
                                 $small_img_html.='<div> <div class="item"><a class="clear-e" href="'.$x->url.'" title="'.$post_infor->title." ".$i.'"><img src="'.$x->url300.'" alt="'.$post_infor->title." ".$i.'" title="'.$post_infor->title.' '.$i.'" class="d-block w-100" /></a> </div> </div>'; 
                             }
                     ?>
-                    <div class="item get-img <?php echo $pos2?"":"imgz-cart"; ?>">
+                    <div class="item <?php echo $pos2?"":"imgz-cart get-img"; ?>">
                         <?php if($pos2){ ?>
                             <div class="lazy-video" data-src="<?php echo $x->url; ?>"></div>
                         <?php }else{?>
@@ -41,7 +41,7 @@
                     <?php }?>
                 </div>
                 <div class="product owl-carousel dot slideProduct-dot">
-                            <?php echo $small_img_html;?>
+                    <?php echo $small_img_html;?>
                 </div>
             </div>
             <?php } ?>

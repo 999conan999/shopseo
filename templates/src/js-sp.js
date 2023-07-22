@@ -32,8 +32,8 @@ try{
                 var prevHeight = prevSlide.height();
                 currentSlide.html('<video controls width="100%" height="'+prevHeight+'" controlsList="nodownload" oncontextmenu="return false;"><source src="' + videoSrc + '" type="video/mp4" ></video>');
                 currentSlide.addClass("loaded");
-                currentVideo = currentSlide.find("video")[0];
             }
+            currentVideo = currentSlide.find("video")[0];
             currentVideo.play();
         }
 

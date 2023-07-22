@@ -54,11 +54,11 @@ async function countDisapprovedProducts(merchantId) {
       var product = productStatuses.resources[i];
       totalProducts += 1;
       if (product.itemLevelIssues) { 
-        if(product.itemLevelIssues[0].code!='low_image_quality'){
+        // if(product.itemLevelIssues[0].code!='low_image_quality'){
          text_error+=`+* ${product.title} 👉⚠️ : "${product.itemLevelIssues[0].code}"
 `;
          numberDisapprovedProducts++;
-        }
+        // }
       }
     }
   } else {
@@ -74,11 +74,11 @@ async function countDisapprovedProducts(merchantId) {
         var product = productStatuses.resources[i];
         totalProducts += 1;
         if (product.itemLevelIssues) {
-          if(product.itemLevelIssues[0].code!='low_image_quality'){
+          // if(product.itemLevelIssues[0].code!='low_image_quality'){
             text_error+=`+* ${product.title} 👉⚠️ : "${product.itemLevelIssues[0].code}"
 `;
             numberDisapprovedProducts++;
-          }
+          // }
         }
       }
     }
@@ -94,6 +94,7 @@ async function countDisapprovedProducts(merchantId) {
  
 //================================================
 function fs_is_load_data_feed(a,b){
+  try{
   if(a.length!=b.length){
     console.log('Merchant : ',a.length);
     console.log('XML : ',b.length);
@@ -116,42 +117,42 @@ function fs_is_load_data_feed(a,b){
           if(a_o.title.replace(/\s/g, '')!=b_o.title.replace(/\s/g, '')){
             console.log("title");
             console.log('title_xml',a_o.title);
-            console.log('title_xml',b_o.title);
+            console.log('title_merchant',b_o.title);
           }
           if(a_o.description.replace(/\s/g, '')!=b_o.description.replace(/\s/g, '')){
             console.log("description");
             console.log('description_xml',a_o.description);
-            console.log('description_xml',b_o.description);
+            console.log('description_merchant',b_o.description);
           }
           if(a_o.link!=b_o.link){
             console.log("link");
             console.log('link_xml',a_o.link);
-            console.log('link_xml',b_o.link);
+            console.log('link_merchant',b_o.link);
           }
           if(a_o.brand.replace(/\s/g, '')!=b_o.brand.replace(/\s/g, '')){
             console.log("brand");
             console.log('brand_xml',a_o.brand);
-            console.log('brand_xml',b_o.brand);
+            console.log('brand_merchant',b_o.brand);
           }
           if(a_o.imageLink!=b_o.imageLink){
             console.log("imageLink");
             console.log('imageLink_xml',a_o.imageLink);
-            console.log('imageLink_xml',b_o.imageLink);
+            console.log('imageLink_merchant',b_o.imageLink);
           }
           if(a_o.customLabel0.replace(/\s/g, '')!=b_o.customLabel0.replace(/\s/g, '')){
             console.log("customLabel0");
             console.log('customLabel0_xml',a_o.customLabel0);
-            console.log('customLabel0_xml',b_o.customLabel0);
+            console.log('customLabel0_merchant',b_o.customLabel0);
           }
           if((Number(a_o.price.replace(' VND',''))!=Number(b_o.price.replace(' VND','')))){
             console.log("price");
             console.log('price_xml',Number(a_o.price.replace(' VND','')));
-            console.log('price_xml',Number(b_o.price.replace(' VND','')));
+            console.log('price_merchant',Number(b_o.price.replace(' VND','')));
           }
           if((a_o.availability.replace('_',' ')!=b_o.availability.replace('_',' '))){
             console.log("availability");
             console.log('availability_xml',a_o.availability.replace('_',' '));
-            console.log('availability_xml',b_o.availability.replace('_',' '));
+            console.log('availability_merchant',b_o.availability.replace('_',' '));
           }
          rs_a=true;
       }
@@ -169,46 +170,46 @@ function fs_is_load_data_feed(a,b){
     if(a_o_arr.length==1){
       let a_o=a_o_arr[0];
       if(a_o.title.replace(/\s/g, '')!=b_o.title.replace(/\s/g, '')||a_o.description.replace(/\s/g, '')!=b_o.description.replace(/\s/g, '')||a_o.link!=b_o.link||a_o.brand.replace(/\s/g, '')!=b_o.brand.replace(/\s/g, '')||a_o.imageLink!=b_o.imageLink||a_o.customLabel0.replace(/\s/g, '')!=b_o.customLabel0.replace(/\s/g, '')||(Number(a_o.price.replace(' VND',''))!=Number(b_o.price.replace(' VND',''))) ||(a_o.availability.replace('_',' ')!=b_o.availability.replace('_',' ')) ){
-        console.log("A");
+        console.log("B");
           if(a_o.title.replace(/\s/g, '')!=b_o.title.replace(/\s/g, '')){
             console.log("title");
             console.log('title_xml',a_o.title);
-            console.log('title_xml',b_o.title);
+            console.log('title_merchant',b_o.title);
           }
           if(a_o.description.replace(/\s/g, '')!=b_o.description.replace(/\s/g, '')){
             console.log("description");
             console.log('description_xml',a_o.description);
-            console.log('description_xml',b_o.description);
+            console.log('description_merchant',b_o.description);
           }
           if(a_o.link!=b_o.link){
             console.log("link");
             console.log('link_xml',a_o.link);
-            console.log('link_xml',b_o.link);
+            console.log('link_merchant',b_o.link);
           }
           if(a_o.brand.replace(/\s/g, '')!=b_o.brand.replace(/\s/g, '')){
             console.log("brand");
             console.log('brand_xml',a_o.brand);
-            console.log('brand_xml',b_o.brand);
+            console.log('brand_merchant',b_o.brand);
           }
           if(a_o.imageLink!=b_o.imageLink){
             console.log("imageLink");
             console.log('imageLink_xml',a_o.imageLink);
-            console.log('imageLink_xml',b_o.imageLink);
+            console.log('imageLink_merchant',b_o.imageLink);
           }
           if(a_o.customLabel0.replace(/\s/g, '')!=b_o.customLabel0.replace(/\s/g, '')){
             console.log("customLabel0");
             console.log('customLabel0_xml',a_o.customLabel0);
-            console.log('customLabel0_xml',b_o.customLabel0);
+            console.log('customLabel0_merchant',b_o.customLabel0);
           }
           if((Number(a_o.price.replace(' VND',''))!=Number(b_o.price.replace(' VND','')))){
             console.log("price");
             console.log('price_xml',Number(a_o.price.replace(' VND','')));
-            console.log('price_xml',Number(b_o.price.replace(' VND','')));
+            console.log('price_merchant',Number(b_o.price.replace(' VND','')));
           }
           if((a_o.availability.replace('_',' ')!=b_o.availability.replace('_',' '))){
             console.log("availability");
             console.log('availability_xml',a_o.availability.replace('_',' '));
-            console.log('availability_xml',b_o.availability.replace('_',' '));
+            console.log('availability_merchant',b_o.availability.replace('_',' '));
           }
          rs_a=true;
       }
@@ -221,6 +222,9 @@ function fs_is_load_data_feed(a,b){
     return true;
   }else{
     return false;
+  }
+  }catch(e){
+    return true;
   }
 }
 // //================================================

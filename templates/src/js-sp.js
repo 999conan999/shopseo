@@ -65,6 +65,7 @@ try{
         window.data_selected={
             url:window.location.href,
             id:window.data.id,
+            cd:window.data.cd,
             title:title,
             img:img_select,
             kt:table_price[0].kt,

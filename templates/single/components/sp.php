@@ -1,9 +1,21 @@
 <?php
-    $att=$post_infor->att;
-    $index_price=$post_infor->index_price;
-    $price_ins=((int)$att->table_price[$index_price]->price_v+(int)$att->table_price[$index_price]->price_profit);
-    $price_del=$price_ins+(int)$att->table_price[$index_price]->price_og;
-    $table_price=array();
+    // $index_price=$post_infor->index_price;
+    // if (is_object($post_infor) && property_exists($post_infor, 'att')) {
+    //     $att=$post_infor->att;
+    //     $price_ins=((int)$att->table_price[$index_price]->price_v+(int)$att->table_price[$index_price]->price_profit);
+    //     $price_del=$price_ins+(int)$att->table_price[$index_price]->price_og;
+    // }else{
+    //     $att = new stdClass();
+    //     $att->title="";
+    //     $att->price_ss=50000;
+    //     $att->attribute_name='Loại';
+    //     $att->is_show_price_table=false;
+    //     $att->is_show_infor=false;
+    //     $att->is_show_commit=false;
+    //     $price_ins=0;
+    //     $price_del=0;
+    // }
+    // $table_price=array();
 ?>
 <section class="container gt1 wrapcontentHome lock" style=" min-height: 545px; ">
     <nav class="woocommerce-breadcrumb breadcrumbs">
@@ -62,7 +74,9 @@
                 </p>
                 <?php } ?>
             </div>
-            <?php if($att->is_show_price_table){ ?>
+            <?php if (is_object($att) && property_exists($att, 'is_show_price_table')) { ?>
+            <?php if ($att->is_show_price_table) { ?>
+
             <div class="table-price">
                 <span>Bảng giá:</span>
                 <table class="table-dt" border="1">
@@ -99,8 +113,9 @@
                     </tbody>
                 </table>
             </div>
-            <?php } ?>
-            <?php if($att->is_show_infor){ ?>
+            <?php }} ?>
+            <?php if (is_object($att) && property_exists($att, 'is_show_infor')) { ?>
+            <?php if ($att->is_show_infor) { ?>
             <div class="table-ct">
                 <span id="thong-so-ki-thuat">Thông số kĩ thuật :</span>
                 <table class="st-pd-table">
@@ -118,7 +133,7 @@
                     </tbody>
                 </table>
             </div>
-            <?php } ?>
+            <?php }} ?>
         </div>
     </div>
     <div id="khuyen-mai" class="row">

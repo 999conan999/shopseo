@@ -51,6 +51,7 @@
         <?php
             $obj=new stdClass();
             $obj->id=$id;
+            $obj->cd=((int)($cd))*(float)($common->dat_hang_cd);
             $obj->attribute_name=$att->attribute_name;
             $obj->table_price=$table_price;
             $obj->cam_ket=$att->table_commit;

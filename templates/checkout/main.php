@@ -1,4 +1,5 @@
 <body>
+<?php echo $common->gg_header;?>
     <div id="root" style="overflow:hidden;">
        <?php echo $header; ?>
         <main class="main container">

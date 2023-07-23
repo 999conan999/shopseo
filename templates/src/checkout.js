@@ -4,15 +4,16 @@ function render_sp_list(){
     let data_carts=localStorage.getItem("order_carts");
     let rs_item_list='';
     let total_price=0;
+    window.value=0;
     if(data_carts==null){
         htmlContent=`<div style=" text-align: center; color: tomato; "><span>Chưa có sản phẩm.</span></div>`;
         disable_buy_btn()
     }else{
         data_carts=JSON.parse(data_carts);
-        console.log("🚀 ~ file: checkout.js:13 ~ render_sp_list ~ data_carts:", data_carts)
         if(data_carts.length>0){
             data_carts.forEach((e,i) => {
                 total_price+=Number(e.price_sale)*Number(e.sl);
+                window.value+=(Number(e.cd)*Number(e.sl));
                 rs_item_list+=`<div style="box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 1px 1px rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12);background: #e8eaf6!important;padding: 12px 5px 0px 2px;margin-top: 5px;margin-bottom: 8px;border: 0.5px solid #9e9797;">
                 <div style=" padding-bottom: 10px; border-bottom: dotted 0.5px #d4cdcd; margin-bottom: 10px; ">
                     <div class="item" style=" display: flex; ">
@@ -47,6 +48,7 @@ function render_sp_list(){
         }
         document.getElementById("sp").innerHTML = htmlContent;
     }
+    console.log("🚀 ~ file: checkout.js:18 ~ data_carts.forEach ~ window.value:", window.value)
 }
 //
 function fs_tru(i){

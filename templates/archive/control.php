@@ -7,5 +7,6 @@ $home_name=str_replace('http://', '', $home_name);
 $data=get_cate_infor($id);
 $current_url=$data->url;
 // var_dump($data);
+$cd=$data->price_ss;
 
 ?>

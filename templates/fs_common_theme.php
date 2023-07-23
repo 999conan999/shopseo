@@ -131,10 +131,11 @@ function get_post_infor($id){
     $obj->title=$cat->name;
     $json_data->cate=$obj;
     $table_prefix=$wpdb->prefix .'shopseo_terms';
-    $sql = $wpdb->prepare( "SELECT related_links FROM $table_prefix WHERE id_term = %d",$results[0]->id_category);
+    $sql = $wpdb->prepare( "SELECT related_links,price_ss FROM $table_prefix WHERE id_term = %d",$results[0]->id_category);
     $results = $wpdb->get_results( $sql , OBJECT );
     if(count($results)>0){
         $json_data->related_links=json_decode($results[0]->related_links);
+        $json_data->price_ss=($results[0]->price_ss);
     } 
     //
     if($json_data->type!="bv"){

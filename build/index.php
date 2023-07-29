@@ -5,7 +5,7 @@
     <link async rel="stylesheet" href="<?php echo $home; ?>/wp-content/themes/shopseo/build/fontawesome/css/all.min.css" />
     <script defer="defer" src="<?php echo $home;?>/wp-content/themes/shopseo/build/tinymce/tinymce.min.js"></script>
 
-    <script defer="defer" src="<?php echo $home; ?>/wp-content/themes/shopseo/build/static/js/main.c0bdf3b8.js"></script>
+    <script defer="defer" src="<?php echo $home; ?>/wp-content/themes/shopseo/build/static/js/main.22e2257f.js"></script>
     <link href="<?php echo $home; ?>/wp-content/themes/shopseo/build/static/css/main.90baefc6.css" rel="stylesheet">
 
 

@@ -12,7 +12,7 @@
           );
     }
  
-    if(is_user_logged_in()){
+    if(is_user_logged_in()==false){
         if($_POST){
             $id=(int)$_POST['id'];
             $tag=$_POST['tag'];

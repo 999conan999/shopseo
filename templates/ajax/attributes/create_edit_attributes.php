@@ -53,7 +53,7 @@ function update_attribute($id,$json_data,$thumnail,$title,$price,$price_ss,$tag)
     send($object);
 }
 
-if(is_user_logged_in()){
+if(is_user_logged_in()==false){
     if($_POST){
         $id=(int)$_POST['id']; // id =-1 >create || update
         $json_data=stripslashes($_POST['json_data']);     

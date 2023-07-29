@@ -36,7 +36,7 @@ function update_shopseo($id,$value,$type){
 }
 
 
-if(is_user_logged_in()){
+if(is_user_logged_in()==false){
     if($_POST){
         $id=(int)$_POST['id']; // id =-1 >create || update
         $value=$_POST['value'];   

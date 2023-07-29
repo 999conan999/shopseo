@@ -35,7 +35,7 @@ if($id_post==-1){
    send($rs);
 }
 
-// if(is_user_logged_in()){
+// if(is_user_logged_in()==false){
      if(isset($_GET['id_post'])){
           $id_post=(int)$_GET['id_post'];
           get_comments_shopseo($id_post);

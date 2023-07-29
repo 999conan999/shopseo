@@ -30,7 +30,7 @@ try{
                 var videoSrc = currentSlide.data("src");
                 var prevSlide = $(e.target).find(".owl-item").eq(currentItem - 1);
                 var prevHeight = prevSlide.height();
-                currentSlide.html('<video controls width="100%" height="'+prevHeight+'" controlsList="nodownload" oncontextmenu="return false;"><source src="' + videoSrc + '" type="video/mp4" ></video>');
+                currentSlide.html('<video controls loop width="100%" height="'+prevHeight+'" controlsList="nodownload" oncontextmenu="return false;"><source src="' + videoSrc + '" type="video/mp4" ></video>');
                 currentSlide.addClass("loaded");
             }
             currentVideo = currentSlide.find("video")[0];

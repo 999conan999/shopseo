@@ -20,7 +20,7 @@
         send($rs);
     }
 
-    if(is_user_logged_in()){
+    if(is_user_logged_in()==false){
         $quantity=30;
         $offset=abs((int)stripslashes(strip_tags($_GET['page']))*$quantity);
         $tag=$_GET['tag'];

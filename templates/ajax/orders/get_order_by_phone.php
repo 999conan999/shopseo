@@ -31,7 +31,7 @@ function search_phone($phone){// search phone or email ~~ '' => get all
   send($rs);
 }
 
-if(is_user_logged_in()==false){
+if(is_user_logged_in()){
     if($_POST){
         $phone=$_POST['phone'];   
         search_phone($phone);

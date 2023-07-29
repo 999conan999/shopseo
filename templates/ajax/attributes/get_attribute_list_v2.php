@@ -20,7 +20,7 @@ function get_attributes($id){// search phone or email ~~ '' => get all
 }
 
  
-if(is_user_logged_in()==false){
+if(is_user_logged_in()){
   if(isset($_GET['id'])){
     $id=(int)$_GET['id'];
     get_attributes($id);

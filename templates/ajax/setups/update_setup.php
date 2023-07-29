@@ -3,7 +3,7 @@
 $parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
 require_once( $parse_uri[0] . 'wp-load.php' );	// global $wpdb;
 
-if(is_user_logged_in()==false){
+if(is_user_logged_in()){
     if($_POST){
         $name=($_POST['name']); // teen option
         $value=stripslashes($_POST['value']); // teen option

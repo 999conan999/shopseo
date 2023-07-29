@@ -42,7 +42,7 @@ function update_shopseo($id,$value){
 }
 
 
-if(is_user_logged_in()==false){
+if(is_user_logged_in()){
     if($_POST){
         $id=(int)$_POST['id']; // id =-1 >create || update
         $value=$_POST['value'];   

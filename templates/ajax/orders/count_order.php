@@ -18,7 +18,7 @@ function count_order(){// search phone or email ~~ '' => get all
    send($object);
 }
 
-if(is_user_logged_in()==false){
+if(is_user_logged_in()){
     count_order();
 }
  ?>

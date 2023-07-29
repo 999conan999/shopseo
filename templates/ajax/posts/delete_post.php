@@ -10,7 +10,7 @@ function delete_post_by_id($id){
     send($object);
 }
 
-if(is_user_logged_in()==false){
+if(is_user_logged_in()){
     if($_POST){
         $idN=(int)$_POST['id'];
         delete_post_by_id($idN);

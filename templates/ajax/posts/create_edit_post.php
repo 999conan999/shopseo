@@ -117,7 +117,7 @@ function update_post($id,$json_data,$thumnail,$title,$price,$quantity_sold,$key_
 }
 
 
-if(is_user_logged_in()==false){
+if(is_user_logged_in()){
     if($_POST){
         $id=(int)$_POST['id']; // id =-1 >create || update
         $category_id=(int)$_POST['category_id'];

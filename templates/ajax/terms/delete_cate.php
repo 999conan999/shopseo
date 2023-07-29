@@ -5,7 +5,7 @@ require_once( $parse_uri[0] . 'wp-load.php' );	// global $wpdb;
 //    return wp_delete_category($id);
 // }
 
-if(is_user_logged_in()==false){
+if(is_user_logged_in()){
     if($_POST){
          $object = new stdClass();
         $defaultCategoryId = get_option('default_category');

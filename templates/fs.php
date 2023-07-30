@@ -105,6 +105,12 @@ function my_theme_activation_hook() {
     global $wpdb;
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
+//     // $table_name = $wpdb->prefix . 'shopseo_posts';
+//     // // Kiểm tra xem trường img_shoping đã tồn tại hay chưa
+//     // if (!$wpdb->get_results("SHOW COLUMNS FROM {$table_name} LIKE 'img_shoping'")) {
+//     //     $sql = "ALTER TABLE {$table_name} ADD img_shoping text NOT NULL AFTER thumnail;";
+//     //     $wpdb->query($sql);
+//     // }
     $table_name = $wpdb->prefix . 'shopseo_imgs';
     // Kiểm tra xem bảng đã tồn tại hay chưa
     if ($wpdb->get_var("SHOW TABLES LIKE '{$table_name}'") != $table_name) {
@@ -137,6 +143,7 @@ function my_theme_activation_hook() {
             id_post bigint(20) UNSIGNED NOT NULL,
             id_category bigint(20) UNSIGNED NOT NULL,
             thumnail text NOT NULL,
+            img_shoping text NOT NULL,
             title text NOT NULL,
             price bigint(20) NOT NULL,
             quantity_sold int(10) NOT NULL,

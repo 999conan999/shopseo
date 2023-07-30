@@ -627,6 +627,11 @@ span.xuhms.xu-huong {
 #khuyen-mai{
     padding: 5px;
 }
+span.msp {
+    position: absolute;
+    right: 0px;
+    text-shadow: 1px 1px #fff, -1px 1px #fff, 1px -1px #fff, -1px -1px #fff, 1px 1px 5px #555;
+}
 /* video::-webkit-media-controls-volume-slider {
 display:none;
 }

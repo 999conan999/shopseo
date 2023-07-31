@@ -5,7 +5,7 @@ $Path_name_xml=ABSPATH.'wp-content/themes/shopseo/templates/ajax/xml/products.xm
 function get_infor_shoping_product_by_id($id){// 
     global $wpdb;
     $table_prefix=$wpdb->prefix .'shopseo_posts';
-         $sql = $wpdb->prepare( "SELECT id_post,title,short_des,price,thumnail,shoping_type,instock,id_category FROM $table_prefix WHERE id_post = %d AND shoping_on_off = 'on' AND post_status = 'publish' ORDER BY id DESC ",$id);
+         $sql = $wpdb->prepare( "SELECT id_post,title,short_des,price,thumnail,img_shoping,shoping_type,instock,id_category FROM $table_prefix WHERE id_post = %d AND shoping_on_off = 'on' AND post_status = 'publish' ORDER BY id DESC ",$id);
     $results = $wpdb->get_results( $sql , OBJECT );
     if(count($results)>0){
         $home_url=get_home_url();
@@ -25,8 +25,12 @@ function get_infor_shoping_product_by_id($id){//
         $values['brand'] = $name_brand;
         $values['gtin'] = "";
         $values['mpn'] = "";
+        if($results[0]->img_shoping==""||$results[0]->img_shoping==" "||$results[0]->img_shoping==NULL){
             $thumnail=json_decode($results[0]->thumnail);
         $values['image_link'] = $thumnail->url;
+        }else{
+        $values['image_link'] = $results[0]->img_shoping;
+        }
         $values['google_product_category'] = "";
         $values['custom_label_0'] = $results[0]->shoping_type;
         return $values;

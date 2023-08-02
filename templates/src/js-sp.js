@@ -10,8 +10,11 @@ try{
       dots:false,
       lazyLoad:true,
       autoplay:false,
-    //   autoplayTimeout:800000,
-      autoplayHoverPause:false
+      autoplayHoverPause:false,
+
+      nav: true, // Enables the navigation
+    //   navText: ['Previous', 'Next'], // The text for next and prev buttons
+    //   navClass: ['owl-prev', 'owl-next'], // CSS classes for next and prev buttons
   });
   let oldIndex = 0;
   slideProduct.on('changed.owl.carousel', function (e) {

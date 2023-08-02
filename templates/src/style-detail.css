@@ -632,6 +632,24 @@ span.msp {
     right: 0px;
     text-shadow: 1px 1px #fff, -1px 1px #fff, 1px -1px #fff, -1px -1px #fff, 1px 1px 5px #555;
 }
+button.owl-prev{
+    position: absolute;
+    font-size: 58px !important;
+    top: 34%;
+    background-color: #a7b2bb80 !important;
+    opacity: 0.5;
+}
+button.owl-next {
+    position: absolute;
+    font-size: 58px !important;
+    top: 34%;
+    background-color: #a7b2bb80 !important;
+    opacity: 0.5;
+    right: 0px;
+}
+/* button.owl-prev:hover,button.owl-next:hover{
+    background-color: white !important;
+} */
 /* video::-webkit-media-controls-volume-slider {
 display:none;
 }

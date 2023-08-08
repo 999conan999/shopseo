@@ -66,7 +66,7 @@ $footer='<footer id="footer" class="lock" data="'.$home_url.'">';
         // end chuyen doi
              $footer.='<li><a id="cuoc-goi-2" href="tel:'.$common->lien_he_sdt.'" rel="nofollow" onclick="window.value='.$p.'"><i class="icon-call calzs"></i></a><span class="aml-text-content aml-tooltiptext">Gọi ngay: '.$formattedPhoneNumber.'</span></li>';
              $footer.='<li><a id="lien-he-zalo-1" target="_blank" href="https://zalo.me/'.$common->lien_he_zalo.'" rel="nofollow" onclick="window.value='.$z.'" class="re"><span class="icon-zalo path1"><span class="path1"></span><span class="path2"></span></span></a><span class="aml-text-content aml-tooltiptext">Chat với chúng tôi qua Zalo</span></li>';
-             $footer.='<li><a id="lien-he-fb" target="_blank" href="'.$common->lien_he_fb.'" rel="nofollow" onclick="window.value='.$m.'"><span class="icon-mess icon-messenger"></span></a><span class="aml-text-content aml-tooltiptext">Nhắn tin với chúng tôi qua facebook</span></li>';
+             $footer.='<li><a id="lien-he-fb" target="_blank" href="'.$common->lien_he_fb.'" rel="nofollow" onclick="window.value='.$m.'"><span class="icon-mess icon-messenger"></span></a><span class="aml-text-content aml-tooltiptext">Nhắn tin với chúng tôi qua Telegram</span></li>';
              $footer.='<li onclick="show_cart()"><a id="my-cart"><span class="icon-cartx icon-messenger re"><b class="notify" id="cart-2">0</b></span></a><span class="aml-text-content aml-tooltiptext">Giỏ hàng</span></li>';
         $footer.='</ul>';
     $footer.='</div>';

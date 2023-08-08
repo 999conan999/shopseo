@@ -705,7 +705,7 @@ input{
     padding-left: 0px;
 }
 .menu>ul li{
-    background:#a81411;
+    background:#446cb3;
     list-style: none;
     position: relative;
 }
@@ -1340,12 +1340,15 @@ ul.cart-w.row {
     bottom: 10%;
     font-size: 14px !important;
     position: fixed;
-    background: #e2222b;
+    background: #446cb3;
+    /* background: #e2222b; */
     transition: border-radius 0.5s ease 0s;
     border-radius: 0 10px 10px 0;
     box-shadow: 0 2px 7px rgb(0 0 0 / 0%);
     z-index: 29;
     left:0px;
+    -webkit-box-shadow: 0px 0px 10px -2px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 0px 10px -2px rgba(0, 0, 0, 0.7);
 }
 .ulz{
     list-style: none;
@@ -2112,9 +2115,13 @@ span.xoa:hover{
     color: #fff;
   }
   .icon-mess:before {
-    content: "\e90a";
+    content: "\ea95";
     color: #fff;
   }
+  /* .icon-mess:before {
+    content: "\e90a";
+    color: #fff;
+  } */
   .icon-ms:before {
     content: "\e90b";
     color: #616770;

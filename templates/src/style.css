@@ -2117,6 +2117,7 @@ span.xoa:hover{
   .icon-mess:before {
     content: "\ea95";
     color: #fff;
+    font-size: 33px;
   }
   /* .icon-mess:before {
     content: "\e90a";

@@ -299,7 +299,7 @@ function get_sp_card($id,$sl=12,$is_best_saller=false){
         if($is_best_saller){
              $sql = $wpdb->prepare( "SELECT id_post,thumnail,title,quantity_sold,price FROM $table_prefix WHERE is_best_seller = 'true' AND post_status = 'publish' ORDER BY quantity_sold DESC LIMIT %d OFFSET 0",$sl);
         }else{
-            $sql = $wpdb->prepare( "SELECT id_post,thumnail,title,quantity_sold,price FROM $table_prefix WHERE id_category = %d AND post_status = 'publish' ORDER BY id DESC LIMIT %d OFFSET 0",$id,$sl);
+            $sql = $wpdb->prepare( "SELECT id_post,thumnail,title,quantity_sold,price FROM $table_prefix WHERE id_category = %d AND post_status = 'publish' AND post_type = 'sp_main' ORDER BY id DESC LIMIT %d OFFSET 0",$id,$sl);
         }
         $results = $wpdb->get_results( $sql , OBJECT );
         $html='';

@@ -96,7 +96,6 @@ function get_cate_infor($id){
     $json_data=json_decode($results[0]->json_data); 
     $json_data->id=$id;
     $json_data->url=get_category_link($id);
-    //
     global $wpdb;
     $table_prefix=$wpdb->prefix .'shopseo_posts';
          $sql = $wpdb->prepare( "SELECT id_post,thumnail,title,price,quantity_sold FROM $table_prefix WHERE id_category = %d AND post_status = 'publish' ORDER BY id DESC ",$id);
@@ -114,7 +113,7 @@ function get_cate_infor($id){
 function get_post_infor($id){
     global $wpdb;
     $table_prefix=$wpdb->prefix .'shopseo_posts';
-         $sql = $wpdb->prepare( "SELECT quantity_sold,thumnail,related_keyword,id_category,is_best_seller,json_data FROM $table_prefix WHERE id_post = %d",$id);
+         $sql = $wpdb->prepare( "SELECT quantity_sold,thumnail,id_category,is_best_seller,json_data FROM $table_prefix WHERE id_post = %d",$id);
     $results = $wpdb->get_results( $sql , OBJECT );
     if(count($results)==0) die();
     $json_data=json_decode($results[0]->json_data); 
@@ -122,16 +121,52 @@ function get_post_infor($id){
     $json_data->quantity_sold=$results[0]->quantity_sold;
     $json_data->thumnail==json_decode($results[0]->thumnail);
     $json_data->is_best_seller=$results[0]->is_best_seller;
-    $json_data->related_keyword=json_decode($results[0]->related_keyword);
+    // add related keywords
+    global $wpdb;
+    $table_prefix = $wpdb->prefix . 'shopseo_posts';
+    $id_category = $results[0]->id_category; // Thay thế 123 bằng id_category mong muốn
+
+    $sql = $wpdb->prepare(
+        "SELECT id_post, key_word
+        FROM $table_prefix
+        WHERE id_category = %d AND post_status = 'publish' AND id_post > %d
+        ORDER BY id_post ASC
+        LIMIT 15",
+        $id_category,
+        $id
+    );
+    $results = $wpdb->get_results($sql, OBJECT);
+    if(count($results)<6){
+        $sql = $wpdb->prepare(
+            "SELECT id_post, key_word
+            FROM $table_prefix
+            WHERE id_category = %d AND post_status = 'publish'
+            ORDER BY id_post ASC
+            LIMIT 15",
+            $id_category,
+            $id
+        );
+        $results = $wpdb->get_results($sql, OBJECT);
+    }
     //
-    $cat = get_category($results[0]->id_category);
+    $related_keyword=[];
+    foreach($results as $x){
+        $obj = new stdClass();
+        $obj->url=get_permalink($x->id_post);
+        $obj->text=$x->key_word;
+        array_push($related_keyword,$obj);
+    }
+    $json_data->related_keyword=$related_keyword;
+    // var_dump( $json_data->related_keyword);
+    //
+    $cat = get_category($id_category);
     $obj= new stdClass();
     $obj->id=$id;
-    $obj->url=get_category_link($results[0]->id_category);
+    $obj->url=get_category_link($id_category);
     $obj->title=$cat->name;
     $json_data->cate=$obj;
     $table_prefix=$wpdb->prefix .'shopseo_terms';
-    $sql = $wpdb->prepare( "SELECT related_links,price_ss FROM $table_prefix WHERE id_term = %d",$results[0]->id_category);
+    $sql = $wpdb->prepare( "SELECT related_links,price_ss FROM $table_prefix WHERE id_term = %d",$id_category);
     $results = $wpdb->get_results( $sql , OBJECT );
     if(count($results)>0){
         $json_data->related_links=json_decode($results[0]->related_links);

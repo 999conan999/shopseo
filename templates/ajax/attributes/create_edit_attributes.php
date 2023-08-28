@@ -1,7 +1,7 @@
 <?php
 $parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
 require_once( $parse_uri[0] . 'wp-load.php' );	// global $wpdb;
-
+require_once(get_stylesheet_directory().'/templates/ajax/attributes/reload_price_sp_by_cate_id.php');
 function create_attribute($id,$json_data,$thumnail,$title,$price,$price_ss,$tag){
     $data = array(
         'json_data'=> $json_data,
@@ -45,6 +45,7 @@ function update_attribute($id,$json_data,$thumnail,$title,$price,$price_ss,$tag)
     );
     $object = new stdClass();
     if($rs){
+        update_price_all_in_cate($id);
         $object->status=true;
         $object->id=$id;
     }else{

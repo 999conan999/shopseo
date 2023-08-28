@@ -9,11 +9,13 @@
                     <div id="long-des" class="long-des" style="height: 200px;">
                         <blockquote class="link-dt"><?php echo $post_infor->short_des;?></blockquote>
                         <?php echo $post_infor->long_des?>
-                        <?php if(count($post_infor->related_keyword->rs_obj)>0){ ?>
+                        <?php if(count($post_infor->related_keyword)>0){ ?>
                         <h3>Bài viết liên quan:</h3>
                         <ul>
                             <?php 
-                                 foreach ($post_infor->related_keyword->rs_obj as $x){
+                            
+                                 foreach ($post_infor->related_keyword as $x){
+                                // var_dump($x);
                             ?>
                                 <li><a href="<?php echo $x->url ?>" title="<?php echo $x->text; ?>"><?php echo $x->text; ?></a></li>
                             <?php } ?>

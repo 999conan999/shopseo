@@ -28,7 +28,6 @@
         $price_ins=((int)$att->table_price[$index_price]->price_v+(int)$att->table_price[$index_price]->price_profit);
         $price_del=$price_ins+(int)$att->table_price[$index_price]->price_og;
         $cd=$att->price_ss;
-
     }else{
         $att = new stdClass();
         $att->title="";

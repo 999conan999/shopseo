@@ -79,7 +79,6 @@
             </div>
             <?php if (is_object($att) && property_exists($att, 'is_show_price_table')) { ?>
             <?php if ($att->is_show_price_table) { ?>
-
             <div class="table-price">
                 <span>Bảng giá:</span>
                 <table class="table-dt" border="1">

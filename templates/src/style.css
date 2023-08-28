@@ -1677,16 +1677,35 @@ figure figcaption {
 table{
     margin-bottom: 16px;
 }
-blockquote:not(.link-dt) {
-    background: #d9f1c2;
-    border: 1px solid #7abf28;
-    border-radius: 5px;
-    color: #5f9025;
-    margin: 0 0 1rem;
+blockquote {
+    display: block;
+    clear: both;
+    background: #fff;
+    padding: 15px 20px 15px 45px;
+    margin: 0 0 20px;
+    position: relative;
+    border-left: 15px solid #58257b;
+    border-right: 2px solid #58257b;
+    -moz-box-shadow: 2px 2px 15px #ccc;
+    -webkit-box-shadow: 2px 2px 15px #ccc;
+    box-shadow: 2px 2px 15px #ccc;
+    overflow-x: auto;
+}
+blockquote::before {
+    content: "“";
+    font-family: Georgia,serif;
+    font-size: 60px;
+    font-weight: 700;
+    color: #999;
+    position: absolute;
+    left: 10px;
+    top: 0px;
+}
+blockquote::after {
+    content: "";
 }
 blockquote>p {
-    margin: 0px;
-    padding: 0px;
+    margin-bottom: 8px!important;
 }
 .contents a {
     text-decoration: none;

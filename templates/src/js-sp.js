@@ -31,13 +31,18 @@ try{
         if (currentSlide.length > 0 ) {
             if(!currentSlide.hasClass("loaded")){
                 var videoSrc = currentSlide.data("src");
-                var prevSlide = $(e.target).find(".owl-item").eq(currentItem - 1);
+                var prevSlide = $(e.target).find(".owl-item").eq(0);
                 var prevHeight = prevSlide.height();
-                currentSlide.html('<video controls loop width="100%" height="'+prevHeight+'" controlsList="nodownload" oncontextmenu="return false;"><source src="' + videoSrc + '" type="video/mp4" ></video>');
+                currentSlide.html('<video class="videorv" width="100%" height="'+prevHeight+'" ><source src="' + videoSrc + '" type="video/mp4" ></video>');
                 currentSlide.addClass("loaded");
             }
             currentVideo = currentSlide.find("video")[0];
             currentVideo.play();
+            // Thêm sự kiện nghe để lặp lại video khi nó kết thúc
+            currentVideo.addEventListener('ended', function () {
+                currentVideo.currentTime = 0; // Quay lại thời gian bắt đầu của video
+                currentVideo.play();
+            });
         }
 
       //

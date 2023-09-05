@@ -76,14 +76,17 @@
                     $i=0;$rs='';
                         foreach ($list_sp as $idx => $products) {
                             $s=','.$idx.',';
-                            if(strpos($text_id, $s)===false&&$i<12){
+                            if(strpos($text_id, $s)===false&&$i<16){
                                 $i++;
                         $rs.='<li class="bv-cart col-6 col-md-4 col-xl-3 ">';
                         $rs.='<a class="a-bv" href="'.$products["url"].'" title="'.$products['title'].'" target="_blank" >';
                         $rs.='<img src="'.$products['thumnail']->url150.'" width="80px" height="80px">';
                         $rs.='<p style=" font-size: 12px;margin-bottom: 3px; ">'.$products['title'].'</p></a>';
                         $rs.='</li>';
-                        }} 
+                        } elseif ($i >= 16) {
+                            break;
+                        }
+                    } 
                         if($rs!=''){
                         ?>
                 <div class="sty">

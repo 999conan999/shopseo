@@ -44,7 +44,7 @@ function get_home_infor($id){
         $json_data->best_saller=get_sp_card($id,12,true);
         //
         $table_prefix=$wpdb->prefix .'shopseo_terms';
-        $sql = $wpdb->prepare( "SELECT id_term,thumnail,title FROM $table_prefix ORDER BY id_term DESC");
+        $sql = $wpdb->prepare( "SELECT id_term,thumnail,title FROM $table_prefix ORDER BY id_term ASC");
         $results = $wpdb->get_results( $sql , OBJECT );
         $arr=array();
         $i=0;

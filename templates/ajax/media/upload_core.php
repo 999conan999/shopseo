@@ -1,8 +1,6 @@
 <?php 
     $parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
     require_once( $parse_uri[0] . 'wp-load.php' );
-    //**** */ kiểm tra login ở đây
-    // var_dump(is_user_logged_in());
 
     if ( ! function_exists( 'wp_handle_upload' ) ) {
         require_once( ABSPATH . 'wp-admin/includes/file.php' );

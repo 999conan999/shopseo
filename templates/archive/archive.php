@@ -45,6 +45,9 @@
             $head.='<script defer="defer" src="'.$home_url.'/wp-content/themes/shopseo/templates/src/lazyload.js"></script>';
             $head.='<style>@font-face { font-family: "icomoon"; src:  url("'.$home_url.'/wp-content/themes/shopseo/templates/src//icon/fonts/icomoon.eot?rxvpb"); src:  url("'.$home_url.'/wp-content/themes/shopseo/templates/src//icon/fonts/icomoon.eot?rxvpb#iefix") format("embedded-opentype"), url("'.$home_url.'/wp-content/themes/shopseo/templates/src//icon/fonts/icomoon.ttf?rxvpb") format("truetype"), url("'.$home_url.'/wp-content/themes/shopseo/templates/src//icon/fonts/icomoon.woff?rxvpb") format("woff"), url("'.$home_url.'/wp-content/themes/shopseo/templates/src//icon/fonts/icomoon.svg?rxvpb#icomoon") format("svg"); font-weight: normal; font-style: normal; font-display: block; }</style>';
             $head.='<link href="'.$home_url.'/wp-content/themes/shopseo/templates/src/style.css" rel="stylesheet">';
+            if($is_tiktok){
+            $head.='<link href="'.$home_url.'/wp-content/themes/shopseo/templates/src/splide.min.css" rel="stylesheet">';
+            }
             $head.=$common->gg_header;
         $head.='</head>';
         echo $head;

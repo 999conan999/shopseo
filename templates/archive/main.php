@@ -3,7 +3,7 @@
     <div id="root" style="overflow:hidden;">
     <?php echo $header; ?>
         <main class="mainz"  style="background-color: #f2f2f2;overflow-x: hidden;display: flex;flex-direction: column-reverse;padding-bottom: 24px;">
-            <section class="contents container lock">
+            <section class="contents container lock video-runing">
                 <h1 class="title"><?php echo $data->title; ?></h1>
                 <div class="long-des">
                     <blockquote>
@@ -72,6 +72,64 @@
                         <?php }} ?>
                     </div>
                 </div>
+                <!-- video -->
+                <?php if($is_tiktok){ ?>
+                <div class="splide" id="vertical-slider">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            <?php 
+                                $i=0;
+                                foreach($data_tiktok as $video){
+                                    $priceVideo=($video->price)>0?number_format($video->price, 0, ".", ".")." đ":"Liên hệ";
+                            ?>
+                            <li class="splide__slide">
+                                <div class="item-video">
+                                    <?php if (strpos($video->url, '.mp4') !== false) { ?>
+                                    <video class="var-video cs-video" width="100%" src="<?php echo $video->url; ?>" onclick="fs_play_index(<?php echo $i; ?>)"></video>
+                                    <div class="centered-image" id="play-<?php echo $i; ?>"  onclick="fs_play_index(<?php echo $i; ?>)">
+                                        <img src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/play.png" class="play-icon">
+                                    </div>
+                                    <?php }else{ ?>
+                                        <img data-src="<?php echo $video->url; ?>" width="100%" class="var-video cs-video">
+                                    <?php } ?>
+                                    <div class="up-wrap" onclick="fs_scroll_top()">
+                                        <img src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/up-icon.png" width="50px">
+                                        <div>Lên trên</div>
+                                    </div>
+                                    <span class="contact-video shadz">Zalo: <?php echo $formattedPhoneNumber; ?></span>
+                                    <span class="title-video shadz"><?php echo $video->title; ?></span>
+                                    <div class="price-video shadz">Giá: <b><?php echo $priceVideo; ?></b></div>
+                                    <?php  if($video->sold_out>0){ ?>
+                                    <div class="sold-video shadz price-video">đã bán: <b><?php echo $video->sold_out; ?></b></div>
+                                    <?php } ?>
+                                    <span class="mxid">Mã: <?php echo $id; ?>X<?php echo $i+1; ?></span>
+                                    <div class="menu-video">
+                                        <a target="_blank" href="https://zalo.me/<?php echo $common->lien_he_zalo?>" rel="nofollow">
+                                            <div class="re">
+                                                <img src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/zalo.png" width="72px">
+                                            </div>
+                                            <div class="re">
+                                                <img class="abs" style="right:14px;top:14px" src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/heart.png" width="39px">
+                                                <span class="abs numx" style="right:14px;top:52px"><?php echo round((rand(11, 350) / 10), 1); ?>k</span>
+                                                <img class="abs" style="right:12px;top:95px" src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/chat.png" width="39px">
+                                                <span class="abs numx" style="right:17px;top:135px"><?php echo rand(400, 990); ?></span>
+                                                <img class="abs" style="right:12px;top:167px" src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/share.png" width="39px">
+                                                <span class="abs numx" style="right:17px;top:203px"><?php echo rand(0, 400); ?></span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>      
+                            <?php 
+                                $i++;
+                            } 
+                            ?>
+                        </ul> 
+                    </div>
+
+                </div>
+                <?php } ?>
+                <!-- endvideo  -->
                 <?php 
                     $i=0;$rs='';
                         foreach ($list_sp as $idx => $products) {
@@ -87,9 +145,9 @@
                             break;
                         }
                     } 
-                        if($rs!=''){
-                        ?>
-                <div class="sty">
+                    if($rs!=''){
+                ?>
+                <div class="sty video-runing">
                     <div class="wrap-list">
                         <div class="lis-category">
                             <div class="header-cate re">
@@ -109,6 +167,10 @@
         </main>
     <?php echo $footer; ?>
     </div>
+    <?php if($is_tiktok){ ?>
+    <script src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/jquery.js"></script>
+    <script src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/splide.min.js"></script>
+    <?php } ?>
     <script src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/js.js"></script>
     <script type="text/javascript"> document.addEventListener('copy', function (e) { e.preventDefault(); }); document.addEventListener('contextmenu', function (e) { e.preventDefault(); }); </script>
 </body>

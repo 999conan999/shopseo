@@ -1,6 +1,6 @@
 <?php
 $footer='<footer id="footer" class="lock" data="'.$home_url.'">';
-    $footer.='<div class="content-footer">';
+    $footer.='<div class="content-footer video-runing">';
         $footer.='<div class="container">';
             $footer.='<div class="row">';
                 $footer.='<div class="col-12 col-sm-6 col-lg-3">';
@@ -45,7 +45,7 @@ $footer='<footer id="footer" class="lock" data="'.$home_url.'">';
             $footer.='</div>';
         $footer.='</div>';
     $footer.='</div>';
-    $footer.='<div class="footer-bottom">';
+    $footer.='<div class="footer-bottom video-runing">';
         $footer.='<div class="sol textz"> <p style="margin: 0px;">'.$common->design_by.'</p> </div>';
     $footer.='</div>';
     $footer.='<div class="fixed-tool">';

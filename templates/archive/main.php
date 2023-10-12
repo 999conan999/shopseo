@@ -85,7 +85,7 @@
                             <li class="splide__slide">
                                 <div class="item-video">
                                     <?php if (strpos($video->url, '.mp4') !== false) { ?>
-                                    <video class="var-video cs-video" width="100%" <?php echo $i==0?"src":"data-src"; ?>="<?php echo $video->url; ?>" onclick="fs_play_index(<?php echo $i; ?>)"></video>
+                                    <video playsinline type="video/mp4" class="var-video cs-video" width="100%" <?php echo $i==0?"src":"data-src"; ?>="<?php echo $video->url; ?>" onclick="fs_play_index(<?php echo $i; ?>)"></video>
                                     <div class="centered-image" id="play-<?php echo $i; ?>"  onclick="fs_play_index(<?php echo $i; ?>)">
                                         <img src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/play.png" class="play-icon">
                                     </div>

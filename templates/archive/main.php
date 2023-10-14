@@ -96,7 +96,7 @@
                                         <img src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/up-icon.png" width="50px">
                                         <div>Lên trên</div>
                                     </div>
-                                    <span class="contact-video shadz">Zalo: <?php echo $formattedPhoneNumber; ?></span>
+                                    <span class="contact-video shadz">Zalo: 👉 <?php echo $formattedPhoneNumber; ?> 👈</span>
                                     <span class="title-video shadz"><?php echo $video->title; ?></span>
                                     <div class="price-video shadz">Giá: <b><?php echo $priceVideo; ?></b></div>
                                     <?php  if($video->sold_out>0){ ?>
@@ -111,6 +111,7 @@
                                             <div class="re">
                                                 <img class="abs" style="right:14px;top:14px" src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/heart.png" width="39px">
                                                 <span class="abs numx" style="right:14px;top:52px"><?php echo round((rand(11, 350) / 10), 1); ?>k</span>
+                                                <span class="abs numx" style="right:10px;top:-19px;font-weight: 700;">Liên hệ</span>
                                                 <img class="abs" style="right:12px;top:95px" src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/chat.png" width="39px">
                                                 <span class="abs numx" style="right:17px;top:135px"><?php echo rand(400, 990); ?></span>
                                                 <img class="abs" style="right:12px;top:167px" src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/share.png" width="39px">

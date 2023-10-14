@@ -48,7 +48,7 @@ $footer='<footer id="footer" class="lock" data="'.$home_url.'">';
     $footer.='<div class="footer-bottom video-runing">';
         $footer.='<div class="sol textz"> <p style="margin: 0px;">'.$common->design_by.'</p> </div>';
     $footer.='</div>';
-    $footer.='<div class="fixed-tool">';
+    $footer.='<div class="fixed-tool video-runing">';
         $footer.='<ul class="ulz">';
         // xu ly chuyen doi contacts here
         $p=50000;

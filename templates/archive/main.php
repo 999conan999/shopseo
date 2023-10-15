@@ -81,11 +81,17 @@
                                 $i=0;
                                 foreach($data_tiktok as $video){
                                     $priceVideo=($video->price)>0?number_format($video->price, 0, ".", ".")." đ":"Liên hệ";
+                                    $poster="";
+                                    if($i<4){
+                                        if (isset($video->poster)) {
+                                            $poster=$video->poster;
+                                        }
+                                    }
                             ?>
                             <li class="splide__slide">
                                 <div class="item-video">
                                     <?php if (strpos($video->url, '.mp4') !== false) { ?>
-                                    <video playsinline type="video/mp4" class="var-video cs-video" width="100%" <?php echo $i==0?'src="'.$video->url.'"':'data-src="'.$video->url.'"'; ?> onclick="fs_play_index(<?php echo $i; ?>)"></video>
+                                    <video playsinline type="video/mp4" class="var-video cs-video" width="100%" <?php echo $poster==""?'':'poster="'.$poster.'"'; ?> <?php echo $i==0?'src="'.$video->url.'"':'data-src="'.$video->url.'"'; ?> onclick="fs_play_index(<?php echo $i; ?>)"></video>
                                     <div class="centered-image" id="play-<?php echo $i; ?>"  onclick="fs_play_index(<?php echo $i; ?>)">
                                         <img src="<?php echo $home_url;?>/wp-content/themes/shopseo/templates/src/play.png" class="play-icon">
                                     </div>

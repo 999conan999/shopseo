@@ -82,10 +82,8 @@
                                 foreach($data_tiktok as $video){
                                     $priceVideo=($video->price)>0?number_format($video->price, 0, ".", ".")." đ":"Liên hệ";
                                     $poster="";
-                                    if($i<4){
-                                        if (isset($video->poster)) {
-                                            $poster=$video->poster;
-                                        }
+                                    if (isset($video->poster)) {
+                                        $poster=$video->poster;
                                     }
                             ?>
                             <li class="splide__slide">

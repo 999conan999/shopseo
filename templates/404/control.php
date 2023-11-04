@@ -23,8 +23,3 @@
     $html_xu_huong=get_404_cate();
 
 ?>
-<?php
-
- 
-
-?>

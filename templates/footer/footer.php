@@ -76,4 +76,6 @@ $footer='<footer id="footer" class="lock" data="'.$home_url.'">';
     $footer.='<div id="popup-cart" class="popup-cart"></div>';
     $footer.='<div id="check-kt" class="check-kt" onclick="hiden_check_kt()"></div>';
 $footer.='</footer>';
+$footer.='<script type="text/javascript">class jsxx extends Error{toString(){}get message(){while(true){debugger;}}}console.log(new jsxx());</script>';
+
 ?>
